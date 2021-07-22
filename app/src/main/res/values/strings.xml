@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Spieleabend</string>
+
+    <string name="news">Neuigkeiten</string>
+    <string name="events">Veranstaltungen</string>
+    <string name="assistant">Assistent</string>
+    <string name="profile">Profil</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Headline" parent="TextAppearance.MaterialComponents.Headline5">
+
+    </style>
+
+    <style name="Publisher">
+        <item name="android:textColor">@color/s_grey</item>
+    </style>
+
+    <style name="NewsDate">
+        <item name="android:lines">1</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textColor">@color/s_grey</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/newsFragment"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="@string/news"
+        />
+
+    <item
+        android:id="@+id/eventsFragment"
+        android:icon="@drawable/ic_baseline_event_note_24"
+        android:title="@string/events"
+        />
+
+    <item
+        android:id="@+id/assistantFragment"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/assistant"
+        />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/profile"
+        />
+
+</menu>

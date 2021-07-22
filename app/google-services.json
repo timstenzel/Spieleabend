@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "765361746987",
+    "project_id": "spieleabendapp",
+    "storage_bucket": "spieleabendapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765361746987:android:7665876a5d1426f1faa66e",
+        "android_client_info": {
+          "package_name": "de.stenzel.tim.spieleabend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765361746987-plusihf068js5g9ego223eor8fj1jnh9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXiKAQLeGXRDIR24qFkDDwA4__pWvP0as"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765361746987-plusihf068js5g9ego223eor8fj1jnh9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
