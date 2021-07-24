@@ -1,5 +1,6 @@
 package de.stenzel.tim.spieleabend.presentation.news
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +44,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
         fun bind(model: NewsModel) {
             Glide.with(itemView).load(R.drawable.news_default).into(binding.newsItemIv)
             binding.newsItemPublisherTv.text = model.publisher
-            binding.newsItemDateTv.text = model.publishedAt
+            binding.newsItemDateTv.text = model.published
             binding.newsItemTitleTv.text = model.title
         }
     }
