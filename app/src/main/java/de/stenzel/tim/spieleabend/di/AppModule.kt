@@ -34,9 +34,8 @@ object AppModule {
     @Singleton
     fun provideFireDB() : DatabaseReference = FirebaseDatabase.getInstance(Constants.URL_FIRE_DB).reference
 
-    //TODO provide Adapter for Lists
+    //provide Adapter for Lists
     @Provides
     fun provideNewsAdapter() : NewsAdapter = NewsAdapter()
-
 
 }

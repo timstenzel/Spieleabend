@@ -10,6 +10,7 @@ import de.stenzel.tim.spieleabend.models.NewsModel
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
 
+    var onItemClick: ((NewsModel) -> Unit)? = null
     private val data = ArrayList<NewsModel>()
 
     fun setData(list: List<NewsModel>) {
@@ -32,6 +33,13 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
     }
 
     inner class NewsItemViewHolder(private val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(data[adapterPosition])
+            }
+        }
+
         fun bind(model: NewsModel) {
             Glide.with(itemView).load(R.drawable.news_default).into(binding.newsItemIv)
             binding.newsItemPublisherTv.text = model.publisher
