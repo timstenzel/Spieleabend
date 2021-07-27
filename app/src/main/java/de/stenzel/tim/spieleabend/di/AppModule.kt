@@ -1,5 +1,6 @@
 package de.stenzel.tim.spieleabend.di
 
+import android.app.Application
 import android.provider.SyncStateContract
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -32,7 +33,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFireDB() : DatabaseReference = FirebaseDatabase.getInstance(Constants.URL_FIRE_DB).reference
+    fun provideFireDB() : FirebaseDatabase = FirebaseDatabase.getInstance(Constants.URL_FIRE_DB)
 
     //provide Adapter for Lists
     @Provides

@@ -7,12 +7,12 @@ import de.stenzel.tim.spieleabend.R
 @IgnoreExtraProperties
 class NewsModel {
 
-    val img : Int = R.drawable.news_default
+    val img : String = ""
     val title : String = ""
     val subtitle : String = ""
     val text : String = ""
     val publisher : String = ""
-    val published : String = ""
+    val published : Long = -1L
 
     constructor() {
         //default constructor
