@@ -15,5 +15,10 @@
         <item name="android:textColor">@color/s_grey</item>
     </style>
 
+    <style name="NewsContent">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+
 
 </resources>

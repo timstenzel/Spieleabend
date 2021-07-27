@@ -9,5 +9,35 @@
         android:id="@+id/newsFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.news.NewsFragment"
         android:label="news_fragment"
-        tools:layout="@layout/news_fragment" />
+        tools:layout="@layout/news_fragment" >
+        <action
+            android:id="@+id/action_newsFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.news.NewsDetailFragment"
+        android:label="news_detail_fragment"
+        tools:layout="@layout/news_detail_fragment" >
+        <argument
+            android:name="img"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="publisher"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="content"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="publishDate"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
 </navigation>
