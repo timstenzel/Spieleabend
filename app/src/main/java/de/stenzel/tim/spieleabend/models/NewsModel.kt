@@ -9,10 +9,9 @@ class NewsModel {
 
     val img : String = ""
     val title : String = ""
-    val subtitle : String = ""
-    val text : String = ""
+    val content : String = ""
     val publisher : String = ""
-    val published : Long = -1L
+    val publishDate : Long = -1L
 
     constructor() {
         //default constructor

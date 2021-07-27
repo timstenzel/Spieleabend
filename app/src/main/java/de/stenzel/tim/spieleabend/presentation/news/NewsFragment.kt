@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,8 @@ class NewsFragment : Fragment() {
         binding.newsRv.adapter = newsAdapter
 
         newsAdapter.onItemClick = { newsModel ->
-            Toast.makeText(context, "item ${newsModel.title} clicked", Toast.LENGTH_SHORT).show()
+            val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(newsModel.img, newsModel.publisher, newsModel.title, newsModel.content, newsModel.publishDate)
+            findNavController().navigate(action)
         }
 
         viewModel.news.observe(viewLifecycleOwner, Observer { newsList ->

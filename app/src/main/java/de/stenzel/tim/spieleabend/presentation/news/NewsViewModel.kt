@@ -41,7 +41,7 @@ constructor(
                     list.add(news!!)
                 }
                 //filter list by date desc (oldest at bottom)
-                list.sortByDescending { it.published }
+                list.sortByDescending { it.publishDate }
                 _news.postValue(list)
 
             }

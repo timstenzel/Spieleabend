@@ -56,7 +56,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
                 GlideApp.with(itemView).load(ref).error(R.drawable.error_default).into(binding.newsItemIv)
             }
             binding.newsItemPublisherTv.text = model.publisher
-            binding.newsItemDateTv.text = formatDate(model.published)
+            binding.newsItemDateTv.text = formatDate(model.publishDate)
             binding.newsItemTitleTv.text = model.title
         }
     }
