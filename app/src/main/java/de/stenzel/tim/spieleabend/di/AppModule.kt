@@ -2,6 +2,7 @@ package de.stenzel.tim.spieleabend.di
 
 import android.app.Application
 import android.provider.SyncStateContract
+import androidx.room.PrimaryKey
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -12,6 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import de.stenzel.tim.spieleabend.helpers.Constants
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
+import de.stenzel.tim.spieleabend.presentation.events.EventAdapter
 import de.stenzel.tim.spieleabend.presentation.news.NewsAdapter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,5 +40,8 @@ object AppModule {
     //provide Adapter for Lists
     @Provides
     fun provideNewsAdapter() : NewsAdapter = NewsAdapter()
+
+    @Provides
+    fun provideEventsAdapter() : EventAdapter = EventAdapter()
 
 }

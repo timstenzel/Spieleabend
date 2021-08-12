@@ -40,4 +40,9 @@
             app:argType="long"
             android:defaultValue="-1L" />
     </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.events.EventFragment"
+        android:label="event_fragment"
+        tools:layout="@layout/event_fragment" />
 </navigation>

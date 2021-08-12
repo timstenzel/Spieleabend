@@ -5,14 +5,22 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
+import java.time.Month
+import java.time.ZoneId
 import java.util.*
 
-fun formatDate(unixTimestamp: Long) : String {
+fun formatTimstampToDateString(unixTimestamp: Long) : String {
 
     val date = Date(unixTimestamp*1000)
     val format = SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY)
 
     return format.format(date)
+}
+
+fun timestampToLocalDate(unixTimestamp: Long): LocalDate {
+    return Instant.ofEpochSecond(unixTimestamp).atZone(ZoneId.systemDefault()).toLocalDate()
 }
 
 fun isNetworkAvailable(context: Context?): Boolean {

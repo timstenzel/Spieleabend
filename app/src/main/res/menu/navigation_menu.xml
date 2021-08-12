@@ -7,7 +7,7 @@
         />
 
     <item
-        android:id="@+id/eventsFragment"
+        android:id="@+id/eventFragment"
         android:icon="@drawable/ic_baseline_event_note_24"
         android:title="@string/events"
         />

@@ -1,20 +1,17 @@
 package de.stenzel.tim.spieleabend.presentation.news
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.NewsDetailFragmentBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
-import de.stenzel.tim.spieleabend.helpers.formatDate
+import de.stenzel.tim.spieleabend.helpers.formatTimstampToDateString
 
 @AndroidEntryPoint
 class NewsDetailFragment : Fragment() {
@@ -39,7 +36,7 @@ class NewsDetailFragment : Fragment() {
             GlideApp.with(requireContext()).load(ref).error(R.drawable.error_default).into(binding.newsDetailIv)
         }
         binding.newsDetailPublisherTv.text = args.publisher
-        binding.newsDetailDateTv.text = formatDate(args.publishDate)
+        binding.newsDetailDateTv.text = formatTimstampToDateString(args.publishDate)
         binding.newsDetailTitleTv.text = args.title
         binding.newsDetailContentTv.text = args.content
     }

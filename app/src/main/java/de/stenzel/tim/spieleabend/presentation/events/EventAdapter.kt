@@ -1,0 +1,115 @@
+package de.stenzel.tim.spieleabend.presentation.events
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
+import de.stenzel.tim.spieleabend.R
+import de.stenzel.tim.spieleabend.databinding.EventHeaderItemBinding
+import de.stenzel.tim.spieleabend.databinding.EventItemBinding
+import de.stenzel.tim.spieleabend.models.EventHeader
+import de.stenzel.tim.spieleabend.models.EventModel
+
+const val TYPE_HEADER = 0
+const val TYPE_EVENT = 1
+
+class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderItemDecoration.StickyHeaderInterface {
+
+    var onEventItemClick: ((EventModel) -> Unit)? = null
+    private val data = ArrayList<Any>()
+
+    fun setData(list: List<Any>) {
+        data.clear()
+        data.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    override fun isHeader(itemPosition: Int): Boolean {
+        return data[itemPosition] is EventHeader
+    }
+
+    override fun bindHeaderData(header: View, headerPosition: Int) {
+        ((header as ConstraintLayout).getChildAt(0) as TextView).text = (data[headerPosition] as EventHeader).title
+    }
+
+    override fun getHeaderLayout(headerPosition: Int): Int {
+        return R.layout.event_header_item
+    }
+
+    override fun getHeaderPositionForItem(itemPosition: Int): Int {
+        var headerPosition = 0
+        var position = itemPosition
+        do {
+            if (this.isHeader(position)) {
+                headerPosition = position
+                break
+            }
+            position -= 1
+        } while (position >= 0)
+        return headerPosition
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_HEADER) {
+            val binding = EventHeaderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            EventHeaderItemViewHolder(binding)
+        } else {
+            val binding = EventItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            EventItemViewHolder(binding)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is EventHeaderItemViewHolder) {
+            holder.bind(data[position] as EventHeader)
+        } else if (holder is EventItemViewHolder) {
+            holder.bind(data[position] as EventModel)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (data[position] is EventHeader) {
+            TYPE_HEADER
+        } else {
+            TYPE_EVENT
+        }
+    }
+
+    inner class EventItemViewHolder(private val binding: EventItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                if (isHeader(adapterPosition)) {
+                    //don't do anything
+                } else {
+                    onEventItemClick?.invoke(data[adapterPosition] as EventModel)
+                }
+            }
+        }
+
+        fun bind(model : EventModel) {
+            binding.eventItemTv.text = model.title
+        }
+    }
+
+    inner class EventHeaderItemViewHolder(private val binding: EventHeaderItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(model : EventHeader) {
+            binding.eventItemHeaderTv.text = model.title
+        }
+    }
+
+
+
+
+
+
+
+
+
+}
