@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "de.stenzel.tim.spieleabend"
-        minSdkVersion 21
+        minSdkVersion 27
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -110,5 +110,8 @@ dependencies {
     //multidex
     def multidex_version = "2.0.1"
     implementation("androidx.multidex:multidex:$multidex_version")
+
+    //recyclerview with sticky headers
+    implementation "org.zakariya.stickyheaders:stickyheaders:0.7.10"
 
 }
