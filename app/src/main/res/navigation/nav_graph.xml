@@ -44,5 +44,47 @@
         android:id="@+id/eventFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.events.EventFragment"
         android:label="event_fragment"
-        tools:layout="@layout/event_fragment" />
+        tools:layout="@layout/event_fragment" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventDetailFragment"
+            app:destination="@id/eventDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.events.EventDetailFragment"
+        android:label="event_detail_fragment"
+        tools:layout="@layout/event_detail_fragment" >
+        <argument
+            android:name="img"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="startDate"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <argument
+            android:name="endDate"
+            app:argType="long"
+            android:defaultValue="-1L" />
+        <argument
+            android:name="publisher"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="location"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="distance"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
 </navigation>
