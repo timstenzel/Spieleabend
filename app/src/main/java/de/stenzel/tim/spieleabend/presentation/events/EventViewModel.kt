@@ -12,7 +12,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.stenzel.tim.spieleabend.helpers.timestampToLocalDate
 import de.stenzel.tim.spieleabend.models.EventHeader
 import de.stenzel.tim.spieleabend.models.EventModel
+import java.time.format.TextStyle
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class EventViewModel
@@ -56,12 +59,12 @@ constructor(private val db : FirebaseDatabase) : ViewModel() {
 
         val finalList = arrayListOf<Any>()
 
-        eventList.sortBy { it.date }
+        eventList.sortBy { it.startDate }
 
         for (e in eventList) {
-            val date = timestampToLocalDate(e.date)
+            val date = timestampToLocalDate(e.startDate)
 
-            val header = EventHeader("${date.month.name} ${date.year}")
+            val header = EventHeader("${date.month.getDisplayName(TextStyle.FULL, Locale.GERMAN)} ${date.year}")
 
             if (!finalList.contains(header)) {
                 finalList.add(header)

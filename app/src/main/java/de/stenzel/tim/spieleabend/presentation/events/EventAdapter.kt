@@ -6,11 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.FirebaseStorage
 import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.EventHeaderItemBinding
 import de.stenzel.tim.spieleabend.databinding.EventItemBinding
+import de.stenzel.tim.spieleabend.glide.GlideApp
+import de.stenzel.tim.spieleabend.helpers.timestampToLocalDateTime
 import de.stenzel.tim.spieleabend.models.EventHeader
 import de.stenzel.tim.spieleabend.models.EventModel
+import java.time.format.DateTimeFormatter
 
 const val TYPE_HEADER = 0
 const val TYPE_EVENT = 1
@@ -83,6 +87,8 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHead
 
     inner class EventItemViewHolder(private val binding: EventItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        private val storage = FirebaseStorage.getInstance()
+
         init {
             itemView.setOnClickListener {
                 if (isHeader(adapterPosition)) {
@@ -94,7 +100,25 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHead
         }
 
         fun bind(model : EventModel) {
-            binding.eventItemTv.text = model.title
+            val startDate = timestampToLocalDateTime(model.startDate)
+            val endDate = timestampToLocalDateTime(model.endDate)
+            val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+            if (model.img.isEmpty()) {
+                GlideApp.with(itemView).load(R.drawable.event_default).into(binding.eventItemImage)
+            } else {
+                val ref = storage.getReferenceFromUrl(model.img)
+                GlideApp.with(itemView).load(ref).error(R.drawable.error_default).into(binding.eventItemImage)
+            }
+            binding.eventItemDate.text = startDate.format(dateFormatter)
+            binding.eventItemTime.text = "${startDate.format(timeFormatter)} - ${endDate.format(timeFormatter)}"
+            binding.eventItemLocation.text = model.location
+            binding.eventItemTitle.text = model.title
+            //TODO use GPS to calculate how far away the event location is
+            binding.eventItemDistance.text = "133 km"
+
+
         }
     }
 

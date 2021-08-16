@@ -5,10 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.Month
-import java.time.ZoneId
+import java.time.*
 import java.util.*
 
 fun formatTimstampToDateString(unixTimestamp: Long) : String {
@@ -21,6 +18,14 @@ fun formatTimstampToDateString(unixTimestamp: Long) : String {
 
 fun timestampToLocalDate(unixTimestamp: Long): LocalDate {
     return Instant.ofEpochSecond(unixTimestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+}
+
+fun timestampToLocalTime(unixTimestamp: Long) : LocalTime {
+    return Instant.ofEpochSecond(unixTimestamp).atZone(ZoneId.systemDefault()).toLocalTime()
+}
+
+fun timestampToLocalDateTime(unixTimestamp: Long) : LocalDateTime {
+    return Instant.ofEpochSecond(unixTimestamp).atZone(ZoneId.systemDefault()).toLocalDateTime()
 }
 
 fun isNetworkAvailable(context: Context?): Boolean {
