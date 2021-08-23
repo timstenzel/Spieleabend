@@ -101,4 +101,9 @@
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/assistantFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.AssistantFragment"
+        android:label="assistant_fragment"
+        tools:layout="@layout/assistant_fragment" />
 </navigation>
