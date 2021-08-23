@@ -94,6 +94,10 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
 
+    //firebase auth
+    implementation 'com.google.firebase:firebase-auth'
+    //firebase auth UI
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
     //firebase realtime db
     implementation 'com.google.firebase:firebase-database-ktx'
     //firebase cloud storage
