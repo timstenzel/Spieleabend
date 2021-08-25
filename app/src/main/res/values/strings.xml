@@ -1,10 +1,24 @@
 <resources>
     <string name="app_name">Spieleabend</string>
 
+    <!-- Navigation -->
     <string name="news">Neuigkeiten</string>
     <string name="events">Veranstaltungen</string>
     <string name="assistant">Assistent</string>
     <string name="profile">Profil</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Profile Fragment -->
+    <string name="profile_save">Speichern</string>
+
+    <!-- Notifications -->
+    <string name="default_notification_channel_id">spieleabend_default_channel_id</string>
+    <string name="default_notification_channel_name">Spieleabend Default Notification Channel</string>
+
+    <string name="news_topics_label">Zu welchen Themen möchten sie Benachrichtigungen erhalten?</string>
+    <string-array name="news_topics">
+        <item>Game</item>
+        <item>Kickstarter</item>
+        <item>GameOfTheYear</item>
+    </string-array>
+
 </resources>

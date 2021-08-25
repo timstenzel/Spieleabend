@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -30,6 +32,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //setup checkboxes for notifications
+        setupCheckboxesForNotifications()
+
         viewModel.isLoggedIn.observe(viewLifecycleOwner, Observer { loggedIn ->
 
             isLoggedIn = loggedIn
@@ -41,6 +46,24 @@ class ProfileFragment : Fragment() {
             }
         })
 
+        binding.profileSaveBtn.setOnClickListener {
+            //get list of boolean values
+            val topics = resources.getStringArray(R.array.news_topics).toList()
+            val subToTopics = arrayListOf<Boolean>()
+            val children = binding.profileTopicsCheckboxContainer.children
+            for (cb in children) {
+                if (cb is CheckBox) {
+                    if (cb.isChecked) {
+                        subToTopics.add(true)
+                    } else {
+                        subToTopics.add(false)
+                    }
+                }
+            }
+
+            viewModel.saveNotificationSubscriptions(topics, subToTopics)
+        }
+
         binding.profileLoginLogoutBtn.setOnClickListener {
             if (isLoggedIn) {
                 logoutUser()
@@ -48,6 +71,19 @@ class ProfileFragment : Fragment() {
                 loginUser()
             }
         }
+    }
+
+    private fun setupCheckboxesForNotifications() {
+
+        val topics = resources.getStringArray(R.array.news_topics)
+
+        for (item in topics.withIndex()) {
+            val checkbox = CheckBox(requireContext())
+            checkbox.id = item.index
+            checkbox.text = item.value
+            binding.profileTopicsCheckboxContainer.addView(checkbox)
+        }
+
     }
 
     private fun loginUser() {

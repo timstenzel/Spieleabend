@@ -103,6 +103,10 @@ dependencies {
     //firebase cloud storage
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+    //firebase installation (to make firebase installation IDs available)
+    implementation 'com.google.firebase:firebase-installations:17.0.0'
+    //firebase cloud messaging (notifications)
+    implementation 'com.google.firebase:firebase-messaging'
 
     //cardview
     implementation("androidx.cardview:cardview:1.0.0")

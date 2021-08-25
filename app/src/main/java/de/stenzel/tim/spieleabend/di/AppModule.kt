@@ -13,6 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import de.stenzel.tim.spieleabend.helpers.Constants
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
+import de.stenzel.tim.spieleabend.notifications.MyFirebaseMessagingService
 import de.stenzel.tim.spieleabend.presentation.assistant.AssistantAdapter
 import de.stenzel.tim.spieleabend.presentation.events.EventAdapter
 import de.stenzel.tim.spieleabend.presentation.news.NewsAdapter
