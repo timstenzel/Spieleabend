@@ -14,13 +14,13 @@
 
     <item
         android:id="@+id/assistantFragment"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_smart_toy_black_24dp"
         android:title="@string/assistant"
         />
 
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/profile"
         />
 

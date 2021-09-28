@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="assistant_images">
+        <item>@drawable/news_default</item>
+        <item>@drawable/news_default</item>
+        <item>@drawable/news_default</item>
+    </integer-array>
+
+</resources>

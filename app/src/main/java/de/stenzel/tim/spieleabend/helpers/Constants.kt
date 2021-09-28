@@ -7,5 +7,6 @@ object Constants {
     const val BASE_URL_BOARDGAME_API = ""
     const val END_POINT_SEARCH = ""
 
+    const val CLIENT_ID = "x5RFZMLbkT"
 
 }

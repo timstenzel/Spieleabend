@@ -100,10 +100,18 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/assistantFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.AssistantFragment"
         android:label="assistant_fragment"
         tools:layout="@layout/assistant_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.settings.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" />
 </navigation>

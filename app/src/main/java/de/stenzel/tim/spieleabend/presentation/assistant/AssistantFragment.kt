@@ -11,7 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.AssistantFragmentBinding
+import de.stenzel.tim.spieleabend.models.AssistantModel
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -19,8 +22,6 @@ class AssistantFragment : Fragment() {
 
     private var _binding: AssistantFragmentBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: AssistantViewModel by viewModels()
 
     @Inject
     lateinit var assistantAdapter: AssistantAdapter
@@ -33,17 +34,27 @@ class AssistantFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val listOfItems = setupList()
+
         val manager : RecyclerView.LayoutManager = GridLayoutManager(context, 2)
         binding.assistantRv.layoutManager = manager
         binding.assistantRv.adapter = assistantAdapter
 
+        assistantAdapter.setData(listOfItems)
+
         assistantAdapter.onItemClick = { assistantModel ->
+
+            val items = resources.getStringArray(R.array.assistant_items)
+
             when(assistantModel.title) {
-                "Dominion Deck Generator" -> {
+                items[0] -> { //dominion deck generator
                     //TODO navigate to generator
                 }
-                "Wer beginnt?" -> {
+                items[1] -> { // who begins
                     //TODO navigate to assistant sub items
+                }
+                items[2] -> { // game catalogue
+                    //TODO navigate to game catalogue
                 }
                 else -> {
                     Log.e("AssistantFgmt", "Title does not match")
@@ -51,12 +62,24 @@ class AssistantFragment : Fragment() {
             }
 
         }
+    }
 
-        viewModel.items.observe(viewLifecycleOwner, Observer { items ->
-            assistantAdapter.setData(items)
-        })
+    private fun setupList(): List<AssistantModel> {
+        val images = resources.obtainTypedArray(R.array.assistant_images)
+        val items = resources.getStringArray(R.array.assistant_items)
 
+        val listOfAssistantItems = arrayListOf<AssistantModel>()
 
+        if (images.length() != items.size) {
+            throw IllegalArgumentException("No equal amount of images and items")
+        } else {
+            for (item in items.withIndex()) {
+                val drawable = images.getDrawable(item.index)
+                listOfAssistantItems.add(AssistantModel(drawable!!, items[item.index]))
+            }
+        }
+        images.recycle()
+        return listOfAssistantItems
     }
 
     override fun onDestroyView() {

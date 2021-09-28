@@ -16,9 +16,7 @@ import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
-class ProfileViewModel
-@Inject
-constructor(
+class ProfileViewModel @Inject constructor(
     @ApplicationContext val context: Context
 ) : ViewModel() {
 
@@ -32,10 +30,9 @@ constructor(
 
     fun statusCheck() {
         val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
-            _isLoggedIn.postValue(false)
-        } else {
-            _isLoggedIn.postValue(true)
+        _isLoggedIn.value = when (user) {
+            null -> false
+            else -> true
         }
     }
 
@@ -45,51 +42,5 @@ constructor(
             .addOnCompleteListener {
                 _isLoggedIn.postValue(false)
             }
-    }
-
-    fun saveNotificationSubscriptions(topicList: List<String>, booleanList: List<Boolean>) {
-
-        val subTo = arrayListOf<String>()
-        val unsubFrom = arrayListOf<String>()
-
-        for (topic in booleanList.withIndex()) {
-            if (booleanList[topic.index]) {
-                subTo.add(topicList[topic.index])
-            } else {
-                unsubFrom.add(topicList[topic.index])
-            }
-        }
-
-        subscribeDeviceToTopics(subTo)
-        unsubscribeDeviceFromTopics(unsubFrom)
-    }
-
-    private fun subscribeDeviceToTopics(topics: List<String>) {
-
-        for (topic in topics) {
-            FirebaseMessaging.getInstance().subscribeToTopic(topic)
-                .addOnCompleteListener { result ->
-                    if (result.isSuccessful) {
-                        Log.d("Profile VM", "sub to $topic: success")
-                    } else {
-                        Log.d("Profile VM", "sub to $topic: fail")
-                    }
-                }
-        }
-    }
-
-    private fun unsubscribeDeviceFromTopics(topics: List<String>) {
-
-        for (topic in topics) {
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
-                .addOnCompleteListener { result ->
-                    if (result.isSuccessful) {
-                        Log.d("Profile VM", "unsub from $topic: success")
-                    } else {
-                        Log.d("Profile VM", "unsub from $topic: fail")
-                    }
-                }
-
-        }
     }
 }

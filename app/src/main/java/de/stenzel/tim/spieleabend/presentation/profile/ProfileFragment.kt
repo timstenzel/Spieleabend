@@ -1,10 +1,10 @@
 package de.stenzel.tim.spieleabend.presentation.profile
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,6 +24,14 @@ class ProfileFragment : Fragment() {
 
     private var isLoggedIn = false
 
+    /*
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+     */
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = ProfileFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,8 +40,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //setup checkboxes for notifications
-        setupCheckboxesForNotifications()
+        setHasOptionsMenu(true)
 
         viewModel.isLoggedIn.observe(viewLifecycleOwner, Observer { loggedIn ->
 
@@ -46,42 +53,12 @@ class ProfileFragment : Fragment() {
             }
         })
 
-        binding.profileSaveBtn.setOnClickListener {
-            //get list of boolean values
-            val topics = resources.getStringArray(R.array.news_topics).toList()
-            val subToTopics = arrayListOf<Boolean>()
-            val children = binding.profileTopicsCheckboxContainer.children
-            for (cb in children) {
-                if (cb is CheckBox) {
-                    if (cb.isChecked) {
-                        subToTopics.add(true)
-                    } else {
-                        subToTopics.add(false)
-                    }
-                }
-            }
-
-            viewModel.saveNotificationSubscriptions(topics, subToTopics)
-        }
-
         binding.profileLoginLogoutBtn.setOnClickListener {
             if (isLoggedIn) {
                 logoutUser()
             } else {
                 loginUser()
             }
-        }
-    }
-
-    private fun setupCheckboxesForNotifications() {
-
-        val topics = resources.getStringArray(R.array.news_topics)
-
-        for (item in topics.withIndex()) {
-            val checkbox = CheckBox(requireContext())
-            checkbox.id = item.index
-            checkbox.text = item.value
-            binding.profileTopicsCheckboxContainer.addView(checkbox)
         }
 
     }
@@ -97,6 +74,23 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.statusCheck()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> {
+                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+                true
+            }
+            else -> {
+                Log.e("Profile Fragment", "error in options menu")
+                true
+            }
+        }
     }
 
     override fun onDestroyView() {

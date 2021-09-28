@@ -1,3 +1,5 @@
 package de.stenzel.tim.spieleabend.models
 
-data class AssistantModel(val image : Int, val title : String)
+import android.graphics.drawable.Drawable
+
+data class AssistantModel(val image : Drawable, val title : String)

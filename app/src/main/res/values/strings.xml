@@ -6,9 +6,19 @@
     <string name="events">Veranstaltungen</string>
     <string name="assistant">Assistent</string>
     <string name="profile">Profil</string>
+    <string name="settings">Einstellungen</string>
+
+    <!-- Assistent Fragment (images to these items are defined in arrays.xml)-->
+    <string-array name="assistant_items">
+        <item>Dominion Deck Generator</item>
+        <item>Wer beginnt?</item>
+        <item>Spielekatalog</item>
+    </string-array>
 
     <!-- Profile Fragment -->
     <string name="profile_save">Speichern</string>
+    <string name="login">Einloggen</string>
+    <string name="logout">Ausloggen</string>
 
     <!-- Notifications -->
     <string name="default_notification_channel_id">spieleabend_default_channel_id</string>
@@ -20,5 +30,22 @@
         <item>Kickstarter</item>
         <item>GameOfTheYear</item>
     </string-array>
+
+    <!-- Preferences -->
+    <string name="theme_cat">Anzeigeeinstellung</string>
+    <string name="theme_key">theme_key</string>
+    <string name="theme_title">Nacht-Modus</string>
+    <string name="theme_summary">Schalten Sie den Nacht-Modus ein oder aus</string>
+    <string name="notifications_cat">Einstellungen für Push-Benachrichtigungen</string>
+    <string name="notifications_switch_key">notification_switch_key</string>
+    <string name="notifications_switch_title">Push-Benachrichtungen erhalten?</string>
+    <string name="notifications_switch_summary">Möchten Sie Push-Benachrichtigungen erhalten?</string>
+    <string name="notifications_cb_key">notification_cb_key_%s</string>
+    <string name="notifications_cb_summary">Möchten Sie Push-Benachrichtigungen zum Thema %s erhalten?</string>
+    <string name="save_button_key">save_button_key</string>
+    <string name="save_button_title">Einstellungen speichern</string>
+    <string name="save_button_settings_saved">Einstellungen gespeichert</string>
+
+
 
 </resources>

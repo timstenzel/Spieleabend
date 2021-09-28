@@ -3,7 +3,10 @@ package de.stenzel.tim.spieleabend.helpers
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Build
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.time.*
 import java.util.*
@@ -54,3 +57,29 @@ fun isNetworkAvailable(context: Context?): Boolean {
     }
     return false
 }
+
+//kotlin extension function
+fun Fragment.showToast(message: String) {
+    Toast.makeText(
+        this.requireContext(),
+        message,
+        Toast.LENGTH_LONG
+    ).show()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
