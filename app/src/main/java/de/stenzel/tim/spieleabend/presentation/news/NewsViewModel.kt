@@ -25,6 +25,10 @@ constructor(
     val news : LiveData<ArrayList<NewsModel>>
         get() = _news
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean>
+        get() = _isLoading
+
     init {
         getAllNews()
     }
@@ -32,6 +36,7 @@ constructor(
 
     private fun getAllNews() {
 
+        _isLoading.value = true
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -43,11 +48,12 @@ constructor(
                 //filter list by date desc (oldest at bottom)
                 list.sortByDescending { it.publishDate }
                 _news.postValue(list)
-
+                _isLoading.value = false
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.d(TAG, "retrieval from db failed")
+                _isLoading.value = false
             }
         }
 

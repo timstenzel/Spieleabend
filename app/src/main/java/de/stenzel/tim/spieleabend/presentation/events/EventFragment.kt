@@ -51,6 +51,13 @@ class EventFragment : Fragment() {
         viewModel.events.observe(viewLifecycleOwner, Observer { eventList ->
             eventsAdapter.setData(eventList)
         })
+
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer { loading ->
+            when(loading) {
+                true -> binding.progressbar.root.show()
+                false -> binding.progressbar.root.hide()
+            }
+        })
     }
 
     override fun onDestroyView() {

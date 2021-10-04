@@ -26,12 +26,17 @@ constructor(private val db : FirebaseDatabase) : ViewModel() {
     val events : LiveData<ArrayList<Any>>
         get() = _events
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean>
+        get() = _isLoading
 
     init {
         getAllEvents()
     }
 
     private fun getAllEvents() {
+
+        _isLoading.value = true
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -44,10 +49,12 @@ constructor(private val db : FirebaseDatabase) : ViewModel() {
                 val finalList = prepareData(list)
 
                 _events.postValue(finalList)
+                _isLoading.value = false
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.d("EventVM", "retrieval from db failed")
+                _isLoading.value = false
             }
         }
 
