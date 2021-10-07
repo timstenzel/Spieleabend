@@ -35,7 +35,7 @@ class AssistantAdapter : RecyclerView.Adapter<AssistantAdapter.AssistantItemView
 
         init {
             itemView.setOnClickListener {
-                onItemClick?.invoke(data[adapterPosition])
+                onItemClick?.invoke(data[absoluteAdapterPosition])
             }
         }
 

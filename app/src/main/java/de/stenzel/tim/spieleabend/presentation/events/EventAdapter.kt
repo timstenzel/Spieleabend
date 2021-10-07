@@ -91,10 +91,10 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHead
 
         init {
             itemView.setOnClickListener {
-                if (isHeader(adapterPosition)) {
+                if (isHeader(absoluteAdapterPosition)) {
                     //don't do anything
                 } else {
-                    onEventItemClick?.invoke(data[adapterPosition] as EventModel)
+                    onEventItemClick?.invoke(data[absoluteAdapterPosition] as EventModel)
                 }
             }
         }
