@@ -108,10 +108,35 @@
         android:id="@+id/assistantFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.AssistantFragment"
         android:label="assistant_fragment"
-        tools:layout="@layout/assistant_fragment" />
+        tools:layout="@layout/assistant_fragment" >
+        <action
+            android:id="@+id/action_assistantFragment_to_catalogueFragment"
+            app:destination="@id/catalogueFragment" />
+        <action
+            android:id="@+id/action_assistantFragment_to_dominionFragment"
+            app:destination="@id/dominionFragment" />
+        <action
+            android:id="@+id/action_assistantFragment_to_firstPlayerFragment"
+            app:destination="@id/firstPlayerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.settings.SettingsFragment"
         android:label="settings_fragment"
         tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/catalogueFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.CatalogueFragment"
+        android:label="catalogue_fragment"
+        tools:layout="@layout/catalogue_fragment" />
+    <fragment
+        android:id="@+id/dominionFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.DominionFragment"
+        android:label="dominion_fragment"
+        tools:layout="@layout/dominion_fragment" />
+    <fragment
+        android:id="@+id/firstPlayerFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.FirstPlayerFragment"
+        android:label="first_player_fragment"
+        tools:layout="@layout/first_player_fragment" />
 </navigation>

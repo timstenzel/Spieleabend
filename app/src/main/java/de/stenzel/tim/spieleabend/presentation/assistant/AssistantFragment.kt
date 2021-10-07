@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,13 +49,13 @@ class AssistantFragment : Fragment() {
 
             when(assistantModel.title) {
                 items[0] -> { //dominion deck generator
-                    //TODO navigate to generator
+                    findNavController().navigate(R.id.action_assistantFragment_to_dominionFragment)
                 }
                 items[1] -> { // who begins
-                    //TODO navigate to assistant sub items
+                    findNavController().navigate(R.id.action_assistantFragment_to_firstPlayerFragment)
                 }
                 items[2] -> { // game catalogue
-                    //TODO navigate to game catalogue
+                    findNavController().navigate(R.id.action_assistantFragment_to_catalogueFragment)
                 }
                 else -> {
                     Log.e("AssistantFgmt", "Title does not match")

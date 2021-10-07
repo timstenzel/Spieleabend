@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import de.stenzel.tim.spieleabend.presentation.assistant.AssistantAdapter
+import de.stenzel.tim.spieleabend.presentation.assistant.CatalogueAdapter
 import de.stenzel.tim.spieleabend.presentation.events.EventAdapter
 import de.stenzel.tim.spieleabend.presentation.news.NewsAdapter
 
@@ -21,5 +22,8 @@ object AppModule {
 
     @Provides
     fun provideAssistantAdapter() : AssistantAdapter = AssistantAdapter()
+
+    @Provides
+    fun provideCatalogueAdapter() : CatalogueAdapter = CatalogueAdapter()
 
 }
