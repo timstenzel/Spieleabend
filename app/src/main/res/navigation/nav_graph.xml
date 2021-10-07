@@ -128,7 +128,11 @@
         android:id="@+id/catalogueFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.CatalogueFragment"
         android:label="catalogue_fragment"
-        tools:layout="@layout/catalogue_fragment" />
+        tools:layout="@layout/catalogue_fragment" >
+        <action
+            android:id="@+id/action_catalogueFragment_to_catalogueDetailFragment"
+            app:destination="@id/catalogueDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dominionFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.DominionFragment"
@@ -139,4 +143,14 @@
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.FirstPlayerFragment"
         android:label="first_player_fragment"
         tools:layout="@layout/first_player_fragment" />
+    <fragment
+        android:id="@+id/catalogueDetailFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.CatalogueDetailFragment"
+        android:label="catalogue_detail_fragment"
+        tools:layout="@layout/catalogue_detail_fragment" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
 </navigation>

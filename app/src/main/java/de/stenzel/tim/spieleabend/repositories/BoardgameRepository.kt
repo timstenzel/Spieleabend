@@ -6,23 +6,45 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import de.stenzel.tim.spieleabend.helpers.Constants
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper
+import de.stenzel.tim.spieleabend.models.BoardgameWrapper2
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
-import de.stenzel.tim.spieleabend.network.BoardgameListPagingSource
 import javax.inject.Inject
 
+/**
+ * provides methods to get all boardgame data from a remote source
+ */
 class BoardgameRepository @Inject constructor(
     private val service : BoardgameApiService
 ){
-    fun getBoardgameList(): LiveData<PagingData<BoardgameWrapper.Game>> {
+
+    /**
+     * get all boardgames paginated
+     * @param defaultConfig
+     */
+    fun getBoardgames(pagingConfig: PagingConfig = getDefaultConfig()): LiveData<PagingData<BoardgameWrapper2.Game>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = Constants.NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = {
-                BoardgameListPagingSource(service)
-            }
+            config = pagingConfig,
+            pagingSourceFactory = {BoardgameListPagingSource(service)}
         ).liveData
     }
+
+    /**
+     * provide a default config for pagination
+     */
+    private fun getDefaultConfig(): PagingConfig {
+        return PagingConfig(
+            pageSize = Constants.NETWORK_PAGE_SIZE * 3,
+            enablePlaceholders = false
+        )
+    }
+
+    /**
+     * get details of a specific boardgame
+     * @param id id of the game
+     */
+    suspend fun getGameDetail(id: String) = service.getGameById(id, Constants.BOARDGAME_API_CLIENT_ID)
+
+
+
+
 }

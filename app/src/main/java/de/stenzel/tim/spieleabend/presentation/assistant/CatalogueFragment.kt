@@ -1,20 +1,21 @@
 package de.stenzel.tim.spieleabend.presentation.assistant
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.databinding.CatalogueFragmentBinding
-import de.stenzel.tim.spieleabend.helpers.showToast
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,14 +40,22 @@ class CatalogueFragment : Fragment() {
         val manager : RecyclerView.LayoutManager = LinearLayoutManager(context)
         binding.catalogueRv.hasFixedSize()
         binding.catalogueRv.layoutManager = manager
-        binding.catalogueRv.adapter = catalogueAdapter
+
+        val loaderStateAdapter = LoaderStateAdapter { catalogueAdapter.retry()}
+        binding.catalogueRv.adapter = catalogueAdapter.withLoadStateFooter(loaderStateAdapter)
 
         catalogueAdapter.onItemClick = { game ->
-            showToast("game: ${game.name}")
+            //disable click on item while loading
+            if (!binding.progressbar.root.isVisible){
+                val action = CatalogueFragmentDirections.actionCatalogueFragmentToCatalogueDetailFragment(game.id)
+                findNavController().navigate(action)
+            }
         }
 
         //add a listener for load state to display a progressbar
         catalogueAdapter.addLoadStateListener { loadState ->
+            Log.d("CFrag", "loading: ${loadState.refresh}")
+
             if (loadState.refresh is LoadState.Loading) {
                 binding.progressbar.root.show()
             } else if (loadState.refresh is LoadState.NotLoading) {
@@ -54,12 +63,16 @@ class CatalogueFragment : Fragment() {
             }
         }
 
-        //observe updates
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getBoardgameList().observe(viewLifecycleOwner, Observer { pagingData ->
-                catalogueAdapter.submitData(lifecycle, pagingData)
-            })
-        }
+        fetchBoardgames()
+    }
+
+    private fun fetchBoardgames() {
+
+        viewModel.fetchBoardgames().observe(viewLifecycleOwner, Observer {
+            lifecycleScope.launch {
+                catalogueAdapter.submitData(it)
+            }
+        })
     }
 
     override fun onDestroyView() {
