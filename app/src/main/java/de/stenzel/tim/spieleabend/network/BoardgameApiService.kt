@@ -1,7 +1,7 @@
 package de.stenzel.tim.spieleabend.network
 
 import de.stenzel.tim.spieleabend.helpers.Constants
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper
+import de.stenzel.tim.spieleabend.models.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -20,5 +20,15 @@ interface BoardgameApiService {
         @Query("ids") id: String,
         @Query("client_id") clientId: String
     ) : Response<BoardgameWrapper>
+
+    @GET(Constants.END_POINT_CATEGORIES)
+    suspend fun getCategories(
+        @Query("client_id") clientId: String
+    ) : Response<CategoriesResponse>
+
+    @GET(Constants.END_POINT_MECHANICS)
+    suspend fun getMechanics(
+        @Query("client_id") clientId: String
+    ) : Response<MechanicsResponse>
 
 }

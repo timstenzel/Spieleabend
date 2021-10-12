@@ -15,6 +15,21 @@
         <item>Spielekatalog</item>
     </string-array>
 
+    <!-- Catalogue Fragment -->
+    <string name="catalogue_player">%d Spieler</string>
+    <string name="catalogue_players">%d - %d Spieler</string>
+    <string name="catalogue_time">%d - %d Min</string>
+
+    <!-- Catalogue Detail Fragment -->
+    <string name="catalogue_detail_rating_num">%d Bewertungen</string>
+    <string name="catalogue_detail_publisher">%s (%d)</string>
+    <string name="catalogue_detail_age">%d+</string>
+    <string name="catalogue_detail_categories">Kategorie: %s</string>
+    <string name="catalogue_detail_mechanics">Spielmechanik: %s</string>
+    <string name="catalogue_detail_learning_complexity">Erlernbarkeit: %.1f/5</string>
+    <string name="catalogue_detail_strategy_complexity">Strategie: %.1f/5</string>
+    <string name="catalogue_detail_rules">Regeln: %s</string>
+
     <!-- Profile Fragment -->
     <string name="profile_save">Speichern</string>
     <string name="login">Einloggen</string>
