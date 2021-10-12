@@ -66,6 +66,7 @@ class CatalogueFragment : Fragment() {
         fetchBoardgames()
     }
 
+    // FIXME: 12.10.21 avoid reload of paging data after return from detail fragment
     private fun fetchBoardgames() {
 
         viewModel.fetchBoardgames().observe(viewLifecycleOwner, Observer {

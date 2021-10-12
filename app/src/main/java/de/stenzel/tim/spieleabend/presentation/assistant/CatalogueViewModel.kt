@@ -1,12 +1,13 @@
 package de.stenzel.tim.spieleabend.presentation.assistant
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper2
+import de.stenzel.tim.spieleabend.models.Game
 import de.stenzel.tim.spieleabend.repositories.BoardgameRepository
 import javax.inject.Inject
 
@@ -15,8 +16,14 @@ class CatalogueViewModel @Inject constructor(
     private val boardgameRepository: BoardgameRepository
 ) : ViewModel() {
 
-    fun fetchBoardgames(): LiveData<PagingData<BoardgameWrapper2.Game>> {
-        return boardgameRepository.getBoardgames().cachedIn(viewModelScope)
+    private var paginatedLiveData : MutableLiveData<PagingData<Game>>? = null
+
+    fun fetchBoardgames(): LiveData<PagingData<Game>> {
+        if (paginatedLiveData != null) {
+            return paginatedLiveData as MutableLiveData<PagingData<Game>>
+        } else {
+            return boardgameRepository.getBoardgames().cachedIn(viewModelScope)
+        }
     }
 
 

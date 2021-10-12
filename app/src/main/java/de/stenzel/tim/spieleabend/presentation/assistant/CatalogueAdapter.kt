@@ -6,11 +6,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import de.stenzel.tim.spieleabend.databinding.CatalogueItemBinding
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper2
+import de.stenzel.tim.spieleabend.models.Game
 
-class CatalogueAdapter : PagingDataAdapter<BoardgameWrapper2.Game, CatalogueAdapter.CatalogueItemViewHolder>(DiffUtilCallback) {
+class CatalogueAdapter : PagingDataAdapter<Game, CatalogueAdapter.CatalogueItemViewHolder>(DiffUtilCallback) {
 
-    var onItemClick: ((BoardgameWrapper2.Game) -> Unit)? = null
+    var onItemClick: ((Game) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogueItemViewHolder {
         val binding = CatalogueItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,23 +29,23 @@ class CatalogueAdapter : PagingDataAdapter<BoardgameWrapper2.Game, CatalogueAdap
             }
         }
 
-        fun bind(model : BoardgameWrapper2.Game, position: Int) {
+        fun bind(model : Game, position: Int) {
             binding.catalogueGameName.text = "$position: ${model.name}"
         }
 
     }
 
-    object DiffUtilCallback : DiffUtil.ItemCallback<BoardgameWrapper2.Game>() {
+    object DiffUtilCallback : DiffUtil.ItemCallback<Game>() {
         override fun areItemsTheSame(
-            oldItem: BoardgameWrapper2.Game,
-            newItem: BoardgameWrapper2.Game
+            oldItem: Game,
+            newItem: Game
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: BoardgameWrapper2.Game,
-            newItem: BoardgameWrapper2.Game
+            oldItem: Game,
+            newItem: Game
         ): Boolean {
             return oldItem == newItem
         }

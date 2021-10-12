@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper2
+import de.stenzel.tim.spieleabend.models.BoardgameWrapper
 import de.stenzel.tim.spieleabend.repositories.BoardgameRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,8 +15,8 @@ class CatalogueDetailViewModel @Inject constructor(
     private val repository: BoardgameRepository
 ) : ViewModel() {
 
-    private val _game = MutableLiveData<BoardgameWrapper2>()
-    val game : LiveData<BoardgameWrapper2>
+    private val _game = MutableLiveData<BoardgameWrapper>()
+    val game : LiveData<BoardgameWrapper>
         get() = _game
 
     private val _isLoading = MutableLiveData<Boolean>()

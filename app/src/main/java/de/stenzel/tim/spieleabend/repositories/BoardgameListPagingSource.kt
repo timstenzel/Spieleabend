@@ -4,13 +4,12 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import de.stenzel.tim.spieleabend.helpers.Constants
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper2
+import de.stenzel.tim.spieleabend.models.Game
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-private const val INITIAL_SKIP_SIZE = 0
 private const val INITIAL_PAGE = 1
 
 /**
@@ -23,9 +22,9 @@ private const val INITIAL_PAGE = 1
  */
 class BoardgameListPagingSource @Inject constructor(
     private val service: BoardgameApiService,
-) : PagingSource<Int, BoardgameWrapper2.Game>(){
+) : PagingSource<Int, Game>(){
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BoardgameWrapper2.Game> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Game> {
 
         return try {
             val page = if (params.key == null) {
@@ -68,7 +67,7 @@ class BoardgameListPagingSource @Inject constructor(
     }
 
 
-    override fun getRefreshKey(state: PagingState<Int, BoardgameWrapper2.Game>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Game>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)

@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import de.stenzel.tim.spieleabend.helpers.Constants
-import de.stenzel.tim.spieleabend.models.BoardgameWrapper2
+import de.stenzel.tim.spieleabend.models.Game
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class BoardgameRepository @Inject constructor(
      * get all boardgames paginated
      * @param defaultConfig
      */
-    fun getBoardgames(pagingConfig: PagingConfig = getDefaultConfig()): LiveData<PagingData<BoardgameWrapper2.Game>> {
+    fun getBoardgames(pagingConfig: PagingConfig = getDefaultConfig()): LiveData<PagingData<Game>> {
         return Pager(
             config = pagingConfig,
             pagingSourceFactory = {BoardgameListPagingSource(service)}
