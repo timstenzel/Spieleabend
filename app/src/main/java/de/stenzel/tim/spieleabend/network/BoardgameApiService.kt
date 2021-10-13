@@ -10,16 +10,16 @@ interface BoardgameApiService {
 
     @GET(Constants.END_POINT_SEARCH)
     suspend fun searchPaging(
-        @Query("limit") limit: Int,
-        @Query("skip") skip: Int,
-        @Query("client_id") clientId: String
-    ) : Response<BoardgameWrapper>
+        @Query("limit") limit: Int = Constants.NETWORK_PAGE_SIZE,
+        @Query("skip") skip: Int = 0,
+        @Query("client_id") clientId: String = Constants.BOARDGAME_API_CLIENT_ID
+    ) : Response<BoardgameResponse>
 
     @GET(Constants.END_POINT_SEARCH)
     suspend fun getGameById(
         @Query("ids") id: String,
         @Query("client_id") clientId: String
-    ) : Response<BoardgameWrapper>
+    ) : Response<BoardgameResponse>
 
     @GET(Constants.END_POINT_CATEGORIES)
     suspend fun getCategories(

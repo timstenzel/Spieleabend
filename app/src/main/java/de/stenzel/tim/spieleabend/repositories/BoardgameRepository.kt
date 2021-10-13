@@ -33,7 +33,7 @@ class BoardgameRepository @Inject constructor(
      */
     private fun getDefaultConfig(): PagingConfig {
         return PagingConfig(
-            pageSize = Constants.NETWORK_PAGE_SIZE * 3,
+            pageSize = Constants.NETWORK_PAGE_SIZE,
             enablePlaceholders = false
         )
     }

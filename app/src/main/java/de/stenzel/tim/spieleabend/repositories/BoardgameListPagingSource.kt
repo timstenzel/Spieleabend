@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import de.stenzel.tim.spieleabend.helpers.Constants
+import de.stenzel.tim.spieleabend.helpers.Resource
 import de.stenzel.tim.spieleabend.models.Game
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
 import retrofit2.HttpException
@@ -35,7 +36,7 @@ class BoardgameListPagingSource @Inject constructor(
             val limit = Constants.NETWORK_PAGE_SIZE
             val offset = (page!!.minus(1)) * limit
             Log.d("BGListPagingSource", "position: $page, offset: $offset")
-            val response = service.searchPaging(limit, skip = offset, clientId = Constants.BOARDGAME_API_CLIENT_ID)
+            val response = service.searchPaging(skip = offset)
 
             val body = response.body()
 
