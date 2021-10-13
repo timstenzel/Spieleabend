@@ -18,17 +18,17 @@ interface BoardgameApiService {
     @GET(Constants.END_POINT_SEARCH)
     suspend fun getGameById(
         @Query("ids") id: String,
-        @Query("client_id") clientId: String
+        @Query("client_id") clientId: String = Constants.BOARDGAME_API_CLIENT_ID
     ) : Response<BoardgameResponse>
 
     @GET(Constants.END_POINT_CATEGORIES)
     suspend fun getCategories(
-        @Query("client_id") clientId: String
+        @Query("client_id") clientId: String = Constants.BOARDGAME_API_CLIENT_ID
     ) : Response<CategoriesResponse>
 
     @GET(Constants.END_POINT_MECHANICS)
     suspend fun getMechanics(
-        @Query("client_id") clientId: String
+        @Query("client_id") clientId: String = Constants.BOARDGAME_API_CLIENT_ID
     ) : Response<MechanicsResponse>
 
 }

@@ -61,6 +61,7 @@
     <string name="save_button_title">Einstellungen speichern</string>
     <string name="save_button_settings_saved">Einstellungen gespeichert</string>
 
-
+    <!-- Error Fragment -->
+    <string name="error_retry">Erneut versuchen</string>
 
 </resources>

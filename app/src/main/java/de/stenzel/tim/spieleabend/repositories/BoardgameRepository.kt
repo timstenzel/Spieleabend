@@ -42,16 +42,16 @@ class BoardgameRepository @Inject constructor(
      * get details of a specific boardgame
      * @param id id of the game
      */
-    suspend fun getGameDetail(id: String) = service.getGameById(id, Constants.BOARDGAME_API_CLIENT_ID)
+    suspend fun getGameDetail(id: String) = service.getGameById(id)
 
     /**
      * get a list of all categories
      */
-    suspend fun getAllCategories() = service.getCategories(Constants.BOARDGAME_API_CLIENT_ID)
+    suspend fun getAllCategories() = service.getCategories()
 
     /**
      * get a list of all mechanics
      */
-    suspend fun getAllMechanics() = service.getMechanics(Constants.BOARDGAME_API_CLIENT_ID)
+    suspend fun getAllMechanics() = service.getMechanics()
 
 }

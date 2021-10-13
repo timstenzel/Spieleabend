@@ -7,6 +7,7 @@ import android.net.NetworkInfo
 import android.os.Build
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import java.text.SimpleDateFormat
 import java.time.*
 import java.util.*
@@ -31,28 +32,20 @@ fun timestampToLocalDateTime(unixTimestamp: Long) : LocalDateTime {
     return Instant.ofEpochSecond(unixTimestamp).atZone(ZoneId.systemDefault()).toLocalDateTime()
 }
 
-fun isNetworkAvailable(context: Context?): Boolean {
-    if (context == null) return false
+fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        if (capabilities != null) {
-            when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                    return true
-                }
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    return true
-                }
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                    return true
-                }
+    val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+    if (capabilities != null) {
+        when {
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                return true
             }
-        }
-    } else {
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
-            return true
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                return true
+            }
+            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                return true
+            }
         }
     }
     return false

@@ -8,6 +8,7 @@
     tools:context=".presentation.assistant.CatalogueDetailFragment">
 
     <ScrollView
+        android:id="@+id/catalogue_detail_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -181,6 +182,10 @@
 
     <include layout="@layout/progress_bar_circular"
         android:id="@+id/progressbar"
+        />
+
+    <include layout="@layout/error_view"
+        android:id="@+id/error_view"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
