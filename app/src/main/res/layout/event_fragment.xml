@@ -17,6 +17,12 @@
 
     <include layout="@layout/progress_bar_circular"
         android:id="@+id/progressbar"
+        android:visibility="gone"
+        />
+
+    <include layout="@layout/error_view"
+        android:id="@+id/error_view"
+        android:visibility="gone"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

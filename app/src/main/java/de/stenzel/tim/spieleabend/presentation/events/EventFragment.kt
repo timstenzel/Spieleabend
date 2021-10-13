@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.databinding.EventFragmentBinding
+import de.stenzel.tim.spieleabend.helpers.Resource
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,16 +49,49 @@ class EventFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        viewModel.events.observe(viewLifecycleOwner, Observer { eventList ->
-            eventsAdapter.setData(eventList)
-        })
-
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer { loading ->
-            when(loading) {
-                true -> binding.progressbar.root.show()
-                false -> binding.progressbar.root.hide()
+        viewModel.events.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressbar()
+                    response.data?.let { eventList ->
+                        eventsAdapter.setData(eventList)
+                    }
+                }
+                is Resource.Error -> {
+                    hideProgressbar()
+                    response.message?.let { message ->
+                        showErrorView(message)
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressbar()
+                    hideErrorView()
+                }
             }
         })
+
+        binding.errorView.errorRetryBtn.setOnClickListener {
+            viewModel.getAllEvents()
+        }
+    }
+
+    private fun showProgressbar() {
+        binding.progressbar.root.show()
+    }
+
+    private fun hideProgressbar() {
+        binding.progressbar.root.hide()
+    }
+
+    private fun showErrorView(message: String) {
+        binding.eventsRv.visibility = View.GONE
+        binding.errorView.root.visibility = View.VISIBLE
+        binding.errorView.errorTextview.text = message
+    }
+
+    private fun hideErrorView() {
+        binding.eventsRv.visibility = View.VISIBLE
+        binding.errorView.root.visibility = View.GONE
     }
 
     override fun onDestroyView() {

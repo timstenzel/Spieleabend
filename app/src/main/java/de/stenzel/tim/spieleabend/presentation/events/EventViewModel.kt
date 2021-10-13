@@ -1,5 +1,6 @@
 package de.stenzel.tim.spieleabend.presentation.events
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,61 +10,78 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.stenzel.tim.spieleabend.helpers.Resource
+import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
 import de.stenzel.tim.spieleabend.helpers.timestampToLocalDate
 import de.stenzel.tim.spieleabend.models.EventHeader
 import de.stenzel.tim.spieleabend.models.EventModel
+import de.stenzel.tim.spieleabend.models.NewsModel
+import java.io.IOException
 import java.time.format.TextStyle
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @HiltViewModel
-class EventViewModel
-@Inject
-constructor(private val db : FirebaseDatabase) : ViewModel() {
+class EventViewModel @Inject constructor(
+    private val application: Application,
+    private val db : FirebaseDatabase
+) : ViewModel() {
 
-    private val _events = MutableLiveData<ArrayList<Any>>()
-    val events : LiveData<ArrayList<Any>>
+    private val _events = MutableLiveData<Resource<List<Any>>>()
+    val events : LiveData<Resource<List<Any>>>
         get() = _events
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading : LiveData<Boolean>
-        get() = _isLoading
-
+    
     init {
         getAllEvents()
     }
 
-    private fun getAllEvents() {
+    fun getAllEvents() {
 
-        _isLoading.value = true
+        try {
+            if (isNetworkAvailable(application)) {
+                _events.postValue(Resource.Loading())
 
-        val listener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val list = arrayListOf<EventModel>()
-                for (sn : DataSnapshot in snapshot.children) {
-                    val event = sn.getValue(EventModel::class.java)
-                    list.add(event!!)
+                val listener = object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        _events.postValue(handleNewsResponse(snapshot))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        _events.postValue(Resource.Error(error.message))
+                    }
                 }
-
-                val finalList = prepareData(list)
-
-                _events.postValue(finalList)
-                _isLoading.value = false
+                db.getReference("events_list").addValueEventListener(listener)
+            } else {
+                _events.postValue(Resource.Error("No internet connection"))
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("EventVM", "retrieval from db failed")
-                _isLoading.value = false
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> {
+                    _events.postValue(Resource.Error("Network failure"))
+                }
+                else -> {
+                    _events.postValue(Resource.Error("Conversion error"))
+                }
             }
         }
+    }
 
-        db.getReference("events_list").addValueEventListener(listener)
+    private fun handleNewsResponse(snapshot: DataSnapshot) : Resource<List<Any>> {
+
+        val list = arrayListOf<EventModel>()
+        for (sn : DataSnapshot in snapshot.children) {
+            val event = sn.getValue(EventModel::class.java)
+            list.add(event!!)
+        }
+
+        val finalList = prepareData(list)
+
+        return Resource.Success(finalList)
     }
 
     private fun prepareData(eventList : ArrayList<EventModel>) : ArrayList<Any> {
         //iterate over list and insert headers
-
         val finalList = arrayListOf<Any>()
 
         eventList.sortBy { it.startDate }

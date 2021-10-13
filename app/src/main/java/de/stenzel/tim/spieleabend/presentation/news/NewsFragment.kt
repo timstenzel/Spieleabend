@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ResourceCursorAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.databinding.NewsFragmentBinding
+import de.stenzel.tim.spieleabend.helpers.Resource
 import de.stenzel.tim.spieleabend.models.NewsModel
 import javax.inject.Inject
 
@@ -44,17 +46,50 @@ class NewsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        viewModel.news.observe(viewLifecycleOwner, Observer { newsList ->
-            newsAdapter.setData(newsList)
-        })
-
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer { loading ->
-            when(loading) {
-                true -> binding.progressbar.root.show()
-                false -> binding.progressbar.root.hide()
+        viewModel.news.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressbar()
+                    response.data?.let { newsList ->
+                        newsAdapter.setData(newsList)
+                    }
+                }
+                is Resource.Error -> {
+                    hideProgressbar()
+                    response.message?.let { message ->
+                        showErrorView(message)
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressbar()
+                    hideErrorView()
+                }
             }
         })
 
+        binding.errorView.errorRetryBtn.setOnClickListener {
+            viewModel.getAllNews()
+        }
+
+    }
+
+    private fun showProgressbar() {
+        binding.progressbar.root.show()
+    }
+
+    private fun hideProgressbar() {
+        binding.progressbar.root.hide()
+    }
+
+    private fun showErrorView(message: String) {
+        binding.newsRv.visibility = View.GONE
+        binding.errorView.root.visibility = View.VISIBLE
+        binding.errorView.errorTextview.text = message
+    }
+
+    private fun hideErrorView() {
+        binding.newsRv.visibility = View.VISIBLE
+        binding.errorView.root.visibility = View.GONE
     }
 
     override fun onDestroyView() {
