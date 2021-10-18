@@ -24,44 +24,34 @@ import kotlin.collections.ArrayList
 
 @HiltViewModel
 class EventViewModel @Inject constructor(
-    private val application: Application,
     private val db : FirebaseDatabase
 ) : ViewModel() {
 
     private val _events = MutableLiveData<Resource<List<Any>>>()
     val events : LiveData<Resource<List<Any>>>
         get() = _events
-    
-    init {
-        getAllEvents()
-    }
 
     fun getAllEvents() {
-
         try {
-            if (isNetworkAvailable(application)) {
-                _events.postValue(Resource.Loading())
+            _events.postValue(Resource.loading(null))
 
-                val listener = object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        _events.postValue(handleNewsResponse(snapshot))
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        _events.postValue(Resource.Error(error.message))
-                    }
+            val listener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    _events.postValue(handleNewsResponse(snapshot))
                 }
-                db.getReference("events_list").addValueEventListener(listener)
-            } else {
-                _events.postValue(Resource.Error("No internet connection"))
+
+                override fun onCancelled(error: DatabaseError) {
+                    _events.postValue(Resource.error(error.message, null))
+                }
             }
+            db.getReference("events_list").addValueEventListener(listener)
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> {
-                    _events.postValue(Resource.Error("Network failure"))
+                    _events.postValue(Resource.error("Network failure", null))
                 }
                 else -> {
-                    _events.postValue(Resource.Error("Conversion error"))
+                    _events.postValue(Resource.error("Conversion error", null))
                 }
             }
         }
@@ -77,7 +67,7 @@ class EventViewModel @Inject constructor(
 
         val finalList = prepareData(list)
 
-        return Resource.Success(finalList)
+        return Resource.success(finalList)
     }
 
     private fun prepareData(eventList : ArrayList<EventModel>) : ArrayList<Any> {

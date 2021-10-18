@@ -15,6 +15,8 @@ import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.CatalogueDetailFragmentBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
 import de.stenzel.tim.spieleabend.helpers.Resource
+import de.stenzel.tim.spieleabend.helpers.Status
+import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
 
 @AndroidEntryPoint
 class CatalogueDetailFragment : Fragment() {
@@ -33,70 +35,71 @@ class CatalogueDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.game.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressbar()
-                    response.data?.let { game ->
-                        //image
-                        if (game.image_url.isEmpty()) {
-                            GlideApp.with(requireContext()).load(R.drawable.news_default).into(binding.catalogueDetailImage)
-                        } else {
-                            GlideApp.with(requireContext()).load(game.image_url).error(R.drawable.error_default).into(binding.catalogueDetailImage)
+        viewModel.game.observe(viewLifecycleOwner, Observer { event ->
+            val resource = event.getContentIfNotHandled()
+            resource?.let { response ->
+                when (response.status) {
+                    Status.SUCCESS -> {
+                        hideProgressbar()
+                        response.data?.let { game ->
+                            //image
+                            if (game.image_url.isEmpty()) {
+                                GlideApp.with(requireContext()).load(R.drawable.news_default).into(binding.catalogueDetailImage)
+                            } else {
+                                GlideApp.with(requireContext()).load(game.image_url).error(R.drawable.error_default).into(binding.catalogueDetailImage)
+                            }
+                            //rating
+                            binding.catalogueDetailRating.rating = game.average_user_rating.toFloat()
+                            binding.catalogueDetailRatingNum.text = getString(R.string.catalogue_detail_rating_num, game.num_user_ratings)
+                            //title
+                            binding.catalogueDetailTitle.text = game.name
+                            //publisher + year
+                            binding.catalogueDetailPublisher.text = getString(R.string.catalogue_detail_publisher, game.primary_publisher.name, game.year_published)
+                            //players
+                            val players = if (game.min_players == game.max_players) {
+                                getString(R.string.catalogue_player, game.max_players)
+                            } else {
+                                getString(R.string.catalogue_players, game.min_players, game.max_players)
+                            }
+                            binding.catalogueDetailPlayers.text = players
+                            //age
+                            binding.catalogueDetailAge.text = getString(R.string.catalogue_detail_age, game.min_age)
+                            //time
+                            binding.catalogueDetailTime.text = getString(R.string.catalogue_time, game.min_playtime, game.max_playtime)
+                            //category
+                            val category = game.categories
+                            val readableCategories = category.joinToString(separator = ", ") {it.name}
+                            binding.catalogueDetailCategory.text = getString(R.string.catalogue_detail_categories, readableCategories)
+                            //mechanics
+                            val mechanics = game.mechanics
+                            val readableMechanics = mechanics.joinToString(separator = ", ") {it.name}
+                            binding.catalogueDetailMechanics.text = getString(R.string.catalogue_detail_mechanics, readableMechanics)
+                            //learning complexity
+                            binding.catalogueDetailLearningComplexity.text = getString(R.string.catalogue_detail_learning_complexity, game.average_learning_complexity)
+                            //strategy complexity
+                            binding.catalogueDetailStrategyComplexity.text = getString(R.string.catalogue_detail_strategy_complexity, game.average_strategy_complexity)
+                            //rules url
+                            binding.catalogueDetailRules.text = getString(R.string.catalogue_detail_rules, game.rules_url)
+                            //description
+                            binding.catalogueDetailDescription.text = Html.fromHtml(game.description, Html.FROM_HTML_MODE_COMPACT)
                         }
-                        //rating
-                        binding.catalogueDetailRating.rating = game.average_user_rating.toFloat()
-                        binding.catalogueDetailRatingNum.text = getString(R.string.catalogue_detail_rating_num, game.num_user_ratings)
-                        //title
-                        binding.catalogueDetailTitle.text = game.name
-                        //publisher + year
-                        binding.catalogueDetailPublisher.text = getString(R.string.catalogue_detail_publisher, game.primary_publisher.name, game.year_published)
-                        //players
-                        val players = if (game.min_players == game.max_players) {
-                            getString(R.string.catalogue_player, game.max_players)
-                        } else {
-                            getString(R.string.catalogue_players, game.min_players, game.max_players)
+                    }
+                    Status.ERROR -> {
+                        hideProgressbar()
+                        response.message?.let { message ->
+                            showErrorView(message)
                         }
-                        binding.catalogueDetailPlayers.text = players
-                        //age
-                        binding.catalogueDetailAge.text = getString(R.string.catalogue_detail_age, game.min_age)
-                        //time
-                        binding.catalogueDetailTime.text = getString(R.string.catalogue_time, game.min_playtime, game.max_playtime)
-                        //category
-                        val category = game.categories
-                        val readableCategories = category.joinToString(separator = ", ") {it.name}
-                        binding.catalogueDetailCategory.text = getString(R.string.catalogue_detail_categories, readableCategories)
-                        //mechanics
-                        val mechanics = game.mechanics
-                        val readableMechanics = mechanics.joinToString(separator = ", ") {it.name}
-                        binding.catalogueDetailMechanics.text = getString(R.string.catalogue_detail_mechanics, readableMechanics)
-                        //learning complexity
-                        binding.catalogueDetailLearningComplexity.text = getString(R.string.catalogue_detail_learning_complexity, game.average_learning_complexity)
-                        //strategy complexity
-                        binding.catalogueDetailStrategyComplexity.text = getString(R.string.catalogue_detail_strategy_complexity, game.average_strategy_complexity)
-                        //rules url
-                        binding.catalogueDetailRules.text = getString(R.string.catalogue_detail_rules, game.rules_url)
-                        //description
-                        binding.catalogueDetailDescription.text = Html.fromHtml(game.description, Html.FROM_HTML_MODE_COMPACT)
                     }
-                }
-                is Resource.Error -> {
-                    hideProgressbar()
-                    response.message?.let { message ->
-                        showErrorView(message)
+                    Status.LOADING -> {
+                        showProgressbar()
+                        hideErrorView()
                     }
-                }
-                is Resource.Loading -> {
-                    showProgressbar()
-                    hideErrorView()
                 }
             }
-
-
         })
 
         if (args.id.isEmpty()) {
-            // TODO: 07.10.21 show error view
+            showErrorView("No valid game id")
         } else {
             startLoading()
         }
@@ -107,8 +110,13 @@ class CatalogueDetailFragment : Fragment() {
     }
 
     private fun startLoading() {
-        Log.d("CDFrag", "loadGameDetails")
-        viewModel.getBoardgameDetails(args.id)
+        showProgressbar()
+        if (isNetworkAvailable(requireContext())) {
+            viewModel.getBoardgameDetails(args.id)
+        } else {
+            hideProgressbar()
+            showErrorView("No internet connection")
+        }
     }
 
     private fun showProgressbar() {

@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.databinding.EventFragmentBinding
 import de.stenzel.tim.spieleabend.helpers.Resource
+import de.stenzel.tim.spieleabend.helpers.Status
+import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,20 +52,20 @@ class EventFragment : Fragment() {
         }
 
         viewModel.events.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
+            when (response.status) {
+                Status.SUCCESS -> {
                     hideProgressbar()
                     response.data?.let { eventList ->
                         eventsAdapter.setData(eventList)
                     }
                 }
-                is Resource.Error -> {
+                Status.ERROR -> {
                     hideProgressbar()
                     response.message?.let { message ->
                         showErrorView(message)
                     }
                 }
-                is Resource.Loading -> {
+                Status.LOADING -> {
                     showProgressbar()
                     hideErrorView()
                 }
@@ -71,7 +73,19 @@ class EventFragment : Fragment() {
         })
 
         binding.errorView.errorRetryBtn.setOnClickListener {
+            startLoading()
+        }
+
+        startLoading()
+    }
+
+    private fun startLoading() {
+        showProgressbar()
+        if (isNetworkAvailable(requireContext())) {
             viewModel.getAllEvents()
+        } else {
+            hideProgressbar()
+            showErrorView("No internet connection")
         }
     }
 

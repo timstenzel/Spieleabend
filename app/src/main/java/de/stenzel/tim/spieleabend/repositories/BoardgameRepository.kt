@@ -1,57 +1,21 @@
 package de.stenzel.tim.spieleabend.repositories
 
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.liveData
-import de.stenzel.tim.spieleabend.helpers.Constants
+import de.stenzel.tim.spieleabend.helpers.Resource
+import de.stenzel.tim.spieleabend.models.BoardgameResponse
+import de.stenzel.tim.spieleabend.models.CategoriesResponse
 import de.stenzel.tim.spieleabend.models.Game
-import de.stenzel.tim.spieleabend.network.BoardgameApiService
-import javax.inject.Inject
+import de.stenzel.tim.spieleabend.models.MechanicsResponse
 
-/**
- * provides methods to get all boardgame data from a remote source
- */
-class BoardgameRepository @Inject constructor(
-    private val service : BoardgameApiService
-){
+interface BoardgameRepository {
 
-    /**
-     * get all boardgames paginated
-     * @param defaultConfig
-     */
-    fun getBoardgames(pagingConfig: PagingConfig = getDefaultConfig()): LiveData<PagingData<Game>> {
-        return Pager(
-            config = pagingConfig,
-            pagingSourceFactory = {BoardgameListPagingSource(service)}
-        ).liveData
-    }
+    suspend fun searchGamesPaging(): LiveData<PagingData<Game>>
 
-    /**
-     * provide a default config for pagination
-     */
-    private fun getDefaultConfig(): PagingConfig {
-        return PagingConfig(
-            pageSize = Constants.NETWORK_PAGE_SIZE,
-            enablePlaceholders = false
-        )
-    }
+    suspend fun getGameDetail(id: String): Resource<BoardgameResponse>
 
-    /**
-     * get details of a specific boardgame
-     * @param id id of the game
-     */
-    suspend fun getGameDetail(id: String) = service.getGameById(id)
+    suspend fun getMechanics() : Resource<MechanicsResponse>
 
-    /**
-     * get a list of all categories
-     */
-    suspend fun getAllCategories() = service.getCategories()
-
-    /**
-     * get a list of all mechanics
-     */
-    suspend fun getAllMechanics() = service.getMechanics()
-
+    suspend fun getCategories() : Resource<CategoriesResponse>
 }

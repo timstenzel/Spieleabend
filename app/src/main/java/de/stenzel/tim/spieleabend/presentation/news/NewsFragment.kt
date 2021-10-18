@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.databinding.NewsFragmentBinding
 import de.stenzel.tim.spieleabend.helpers.Resource
+import de.stenzel.tim.spieleabend.helpers.Status
+import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
 import de.stenzel.tim.spieleabend.models.NewsModel
 import javax.inject.Inject
 
@@ -47,20 +49,20 @@ class NewsFragment : Fragment() {
         }
 
         viewModel.news.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
+            when (response.status) {
+                Status.SUCCESS -> {
                     hideProgressbar()
                     response.data?.let { newsList ->
                         newsAdapter.setData(newsList)
                     }
                 }
-                is Resource.Error -> {
+                Status.ERROR -> {
                     hideProgressbar()
                     response.message?.let { message ->
                         showErrorView(message)
                     }
                 }
-                is Resource.Loading -> {
+                Status.LOADING -> {
                     showProgressbar()
                     hideErrorView()
                 }
@@ -68,9 +70,21 @@ class NewsFragment : Fragment() {
         })
 
         binding.errorView.errorRetryBtn.setOnClickListener {
-            viewModel.getAllNews()
+            startLoading()
         }
 
+        startLoading()
+
+    }
+
+    private fun startLoading() {
+        showProgressbar()
+        if (isNetworkAvailable(requireContext())) {
+            viewModel.getAllNews()
+        } else {
+            hideProgressbar()
+            showErrorView("No internet connection")
+        }
     }
 
     private fun showProgressbar() {

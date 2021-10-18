@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    private val application: Application,
     private val db: FirebaseDatabase
 ) : ViewModel() {
 
@@ -28,36 +27,27 @@ class NewsViewModel @Inject constructor(
     val news : LiveData<Resource<List<NewsModel>>>
         get() = _news
 
-    init {
-        getAllNews()
-    }
-
     fun getAllNews() {
-
         try {
-            if (isNetworkAvailable(application)) {
-                _news.postValue(Resource.Loading())
+            _news.postValue(Resource.loading(null))
 
-                val listener = object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        _news.postValue(handleNewsResponse(snapshot))
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        _news.postValue(Resource.Error(error.message))
-                    }
+            val listener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    _news.postValue(handleNewsResponse(snapshot))
                 }
-                db.getReference("news_list").addValueEventListener(listener)
-            } else {
-                _news.postValue(Resource.Error("No internet connection"))
+
+                override fun onCancelled(error: DatabaseError) {
+                    _news.postValue(Resource.error(error.message, null))
+                }
             }
+            db.getReference("news_list").addValueEventListener(listener)
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> {
-                    _news.postValue(Resource.Error("Network failure"))
+                    _news.postValue(Resource.error("Network failure", null))
                 }
                 else -> {
-                    _news.postValue(Resource.Error("Conversion error"))
+                    _news.postValue(Resource.error("Conversion error", null))
                 }
             }
         }
@@ -73,6 +63,6 @@ class NewsViewModel @Inject constructor(
         //filter list by date desc (oldest at bottom)
         list.sortByDescending { it.publishDate }
 
-        return Resource.Success(list)
+        return Resource.success(list)
     }
 }
