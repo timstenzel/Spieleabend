@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.ProfileFragmentBinding
@@ -23,14 +24,6 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
 
     private var isLoggedIn = false
-
-    /*
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-     */
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = ProfileFragmentBinding.inflate(inflater, container, false)
@@ -51,6 +44,28 @@ class ProfileFragment : Fragment() {
             } else {
                 binding.profileLoginLogoutBtn.text = "Login"
             }
+        })
+
+        viewModel.user.observe(viewLifecycleOwner, Observer { user ->
+            if (user.photoUrl != null) {
+                Glide.with(requireContext()).load(user.photoUrl).into(binding.profileImage)
+            } else {
+                Glide.with(requireContext()).load(R.drawable.ic_baseline_person_24).into(binding.profileImage)
+            }
+
+            binding.profileDisplayName.text = if (user.displayName != null) {
+                user.displayName
+            } else {
+                "nice display name placeholder"
+            }
+            binding.profileEmail.text = user.email
+            binding.profileEmailVerified.text = if (user.isEmailVerified) {
+                "email verified"
+            } else {
+                "email not verified"
+            }
+
+
         })
 
         binding.profileLoginLogoutBtn.setOnClickListener {

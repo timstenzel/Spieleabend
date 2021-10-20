@@ -29,10 +29,10 @@ class NewsDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (args.img.isEmpty()) {
+        if (args.img.isNullOrEmpty()) {
             GlideApp.with(requireContext()).load(R.drawable.news_default).into(binding.newsDetailIv)
         } else {
-            val ref = FirebaseStorage.getInstance().getReferenceFromUrl(args.img)
+            val ref = FirebaseStorage.getInstance().getReferenceFromUrl(args.img!!)
             GlideApp.with(requireContext()).load(ref).error(R.drawable.error_default).into(binding.newsDetailIv)
         }
         binding.newsDetailPublisherTv.text = args.publisher

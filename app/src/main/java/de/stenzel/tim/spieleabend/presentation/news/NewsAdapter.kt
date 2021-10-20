@@ -45,14 +45,14 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
         }
 
         fun bind(model: NewsModel) {
-            if (model.img.isEmpty()) {
+            if (model.img.isNullOrEmpty()) {
                 GlideApp.with(itemView).load(R.drawable.news_default).into(binding.newsItemIv)
             } else {
                 val ref = storage.getReferenceFromUrl(model.img)
                 GlideApp.with(itemView).load(ref).error(R.drawable.error_default).into(binding.newsItemIv)
             }
             binding.newsItemPublisherTv.text = model.publisher
-            binding.newsItemDateTv.text = formatTimstampToDateString(model.publishDate)
+            binding.newsItemDateTv.text = formatTimstampToDateString(model.publishDate?.let { model.publishDate } ?: -1L)
             binding.newsItemTitleTv.text = model.title
         }
     }

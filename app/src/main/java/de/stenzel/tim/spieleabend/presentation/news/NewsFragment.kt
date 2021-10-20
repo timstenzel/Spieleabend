@@ -44,7 +44,9 @@ class NewsFragment : Fragment() {
         binding.newsRv.adapter = newsAdapter
 
         newsAdapter.onItemClick = { newsModel ->
-            val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(newsModel.img, newsModel.publisher, newsModel.title, newsModel.content, newsModel.publishDate)
+            val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(
+                newsModel.img, newsModel.publisher, newsModel.title, newsModel.content, newsModel.publishDate!!
+            )
             findNavController().navigate(action)
         }
 

@@ -100,12 +100,12 @@ class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHead
         }
 
         fun bind(model : EventModel) {
-            val startDate = timestampToLocalDateTime(model.startDate)
-            val endDate = timestampToLocalDateTime(model.endDate)
+            val startDate = timestampToLocalDateTime(model.startDate!!)
+            val endDate = timestampToLocalDateTime(model.endDate!!)
             val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
             val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-            if (model.img.isEmpty()) {
+            if (model.img!!.isEmpty()) {
                 GlideApp.with(itemView).load(R.drawable.event_default).into(binding.eventItemImage)
             } else {
                 val ref = storage.getReferenceFromUrl(model.img)

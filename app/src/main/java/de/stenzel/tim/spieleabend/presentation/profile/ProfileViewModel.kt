@@ -6,7 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.data.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +22,11 @@ class ProfileViewModel @Inject constructor(
     @ApplicationContext val context: Context
 ) : ViewModel() {
 
+    private val _user = MutableLiveData<FirebaseUser>()
+    val user : LiveData<FirebaseUser>
+        get() = _user
+
+
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn : LiveData<Boolean>
         get() = _isLoggedIn
@@ -29,10 +36,14 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun statusCheck() {
-        val user = FirebaseAuth.getInstance().currentUser
-        _isLoggedIn.value = when (user) {
-            null -> false
-            else -> true
+        when (val user = FirebaseAuth.getInstance().currentUser) {
+            null -> {
+                _isLoggedIn.value = false
+            }
+            else -> {
+                _isLoggedIn.value = true
+                _user.value = user!!
+            }
         }
     }
 

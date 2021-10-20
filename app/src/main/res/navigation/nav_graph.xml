@@ -22,19 +22,19 @@
         <argument
             android:name="img"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="publisher"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="title"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="content"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="publishDate"
             app:argType="long"
@@ -45,6 +45,9 @@
         android:name="de.stenzel.tim.spieleabend.presentation.events.EventFragment"
         android:label="event_fragment"
         tools:layout="@layout/event_fragment" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventCreationFragment"
+            app:destination="@id/eventCreationFragment" />
         <action
             android:id="@+id/action_eventFragment_to_eventDetailFragment"
             app:destination="@id/eventDetailFragment" />
@@ -57,15 +60,15 @@
         <argument
             android:name="img"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="title"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="description"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="startDate"
             app:argType="long"
@@ -77,15 +80,15 @@
         <argument
             android:name="publisher"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="location"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
         <argument
             android:name="distance"
             app:argType="string"
-            android:defaultValue='""' />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -153,4 +156,9 @@
             app:argType="string"
             android:defaultValue='""' />
     </fragment>
+    <fragment
+        android:id="@+id/eventCreationFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.events.EventCreationFragment"
+        android:label="event_creation_fragment"
+        tools:layout="@layout/event_creation_fragment" />
 </navigation>

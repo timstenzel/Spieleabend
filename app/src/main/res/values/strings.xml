@@ -1,12 +1,46 @@
 <resources>
     <string name="app_name">Spieleabend</string>
 
+    <!-- Permissions -->
+    <string name="permission_denied">Berechtigung nicht erteilt</string>
+    <string name="permission_denied_permanent">Berechtigung in den Einstellungen erteilen</string>
+    <string name="permission_ex_storage_rationale">Berechtigung wird benötigt um auf die Bildergallerie zuzugreifen</string>
+
     <!-- Navigation -->
     <string name="news">Neuigkeiten</string>
     <string name="events">Veranstaltungen</string>
     <string name="assistant">Assistent</string>
     <string name="profile">Profil</string>
     <string name="settings">Einstellungen</string>
+
+    <!-- Event Fragment -->
+    <string name="add">Starts a form, where a new event can be created</string>
+    <string name="login_please">Loggen Sie sich ein um Veranstaltungen zu erstellen</string>
+
+    <!-- Event Detial Fragment -->
+    <string name="event_publisher">%s präsentiert</string>
+    <string name="event_time">%s - %s</string>
+
+    <!-- Event Creation Fragment -->
+    <string name="title_label">Name</string>
+    <string name="description_label">Beschreibung</string>
+    <string name="location_label">Ort (Straße Hausnummer, PLZ Ort)</string>
+    <string name="start_date_label">Beginn Datum</string>
+    <string name="start_time_label">Beginn Zeit</string>
+    <string name="end_date_label">Ende Datum</string>
+    <string name="end_time_label">Ende Zeit</string>
+    <string name="date_formated">%d.%d.%d</string>
+    <string name="time_formated">%s:%s</string>
+    <string name="public_private_label">Öffentlich?</string>
+    <string name="switch_public_label">Öffentlich</string>
+    <string name="switch_private_label">Privat</string>
+    <string name="event_save_btn">Veranstaltung erstellen</string>
+    <string name="event_creation_onBackPressed">Änderungen verworfen</string>
+
+    <string name="error_required">Erforderlich</string>
+    <string name="error_start_in_past">Start in Vergangenheit</string>
+    <string name="error_end_in_past">Ende in Vergangenheit</string>
+    <string name="error_end_before_start">Ende vor Start</string>
 
     <!-- Assistent Fragment (images to these items are defined in arrays.xml)-->
     <string-array name="assistant_items">

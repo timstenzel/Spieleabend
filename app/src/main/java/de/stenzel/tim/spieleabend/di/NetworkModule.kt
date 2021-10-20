@@ -2,6 +2,7 @@ package de.stenzel.tim.spieleabend.di
 
 import android.content.Context
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,5 +52,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideFireDB() : FirebaseDatabase = FirebaseDatabase.getInstance(Constants.URL_FIRE_DB)
+
+    @Provides
+    @Singleton
+    fun provideFireStorage(): FirebaseStorage = FirebaseStorage.getInstance()
 
 }

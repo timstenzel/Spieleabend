@@ -20,4 +20,7 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+    <style name="Add" parent="Base.Widget.MaterialComponents.TextInputLayout"/>
+    <style name="Add2" parent="Base.Widget.MaterialComponents.TextInputEditText"/>
+
 </resources>

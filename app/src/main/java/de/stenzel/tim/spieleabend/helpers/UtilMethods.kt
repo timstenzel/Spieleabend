@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.os.Build
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -51,13 +52,17 @@ fun isNetworkAvailable(context: Context): Boolean {
     return false
 }
 
-//kotlin extension function
+//kotlin extension functions
 fun Fragment.showToast(message: String) {
     Toast.makeText(
         this.requireContext(),
         message,
         Toast.LENGTH_LONG
     ).show()
+}
+
+fun EditText.clearError() {
+    error = null
 }
 
 

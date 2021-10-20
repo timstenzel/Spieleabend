@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.EventFragmentBinding
-import de.stenzel.tim.spieleabend.helpers.Resource
 import de.stenzel.tim.spieleabend.helpers.Status
 import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
+import de.stenzel.tim.spieleabend.helpers.showToast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -29,7 +28,9 @@ class EventFragment : Fragment() {
     @Inject
     lateinit var eventsAdapter : EventAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private var loggedIn = false
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = EventFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,12 +47,12 @@ class EventFragment : Fragment() {
 
         eventsAdapter.onEventItemClick = { eventModel ->
             val action = EventFragmentDirections.actionEventFragmentToEventDetailFragment(
-                eventModel.img, eventModel.title, eventModel.description, eventModel.startDate,
-                eventModel.endDate, eventModel.publisher, eventModel.location, "133 km")
+                eventModel.img, eventModel.title, eventModel.description, eventModel.startDate!!,
+                eventModel.endDate!!, eventModel.publisher, eventModel.location, "133 km")
             findNavController().navigate(action)
         }
 
-        viewModel.events.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.events.observe(viewLifecycleOwner, { response ->
             when (response.status) {
                 Status.SUCCESS -> {
                     hideProgressbar()
@@ -75,8 +76,25 @@ class EventFragment : Fragment() {
         binding.errorView.errorRetryBtn.setOnClickListener {
             startLoading()
         }
+        
+        binding.eventFabAdd.setOnClickListener {
+            if (loggedIn) {
+                findNavController().navigate(R.id.action_eventFragment_to_eventCreationFragment)
+            } else {
+                showToast(getString(R.string.login_please))
+            }
+        }
+
+        viewModel.isLoggedIn.observe(viewLifecycleOwner, { isLoggedIn ->
+            loggedIn = isLoggedIn
+        })
 
         startLoading()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.statusCheck()
     }
 
     private fun startLoading() {

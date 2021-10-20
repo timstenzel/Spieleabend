@@ -1,26 +1,22 @@
 package de.stenzel.tim.spieleabend.presentation.events
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
 import de.stenzel.tim.spieleabend.helpers.timestampToLocalDate
 import de.stenzel.tim.spieleabend.models.EventHeader
 import de.stenzel.tim.spieleabend.models.EventModel
-import de.stenzel.tim.spieleabend.models.NewsModel
 import java.io.IOException
 import java.time.format.TextStyle
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @HiltViewModel
 class EventViewModel @Inject constructor(
@@ -30,6 +26,11 @@ class EventViewModel @Inject constructor(
     private val _events = MutableLiveData<Resource<List<Any>>>()
     val events : LiveData<Resource<List<Any>>>
         get() = _events
+
+    private val _isLoggedIn = MutableLiveData<Boolean>()
+    val isLoggedIn : LiveData<Boolean>
+        get() = _isLoggedIn
+
 
     fun getAllEvents() {
         try {
@@ -77,7 +78,7 @@ class EventViewModel @Inject constructor(
         eventList.sortBy { it.startDate }
 
         for (e in eventList) {
-            val date = timestampToLocalDate(e.startDate)
+            val date = timestampToLocalDate(e.startDate!!)
 
             val header = EventHeader("${date.month.getDisplayName(TextStyle.FULL, Locale.GERMAN)} ${date.year}")
 
@@ -88,5 +89,13 @@ class EventViewModel @Inject constructor(
         }
 
         return finalList
+    }
+
+    fun statusCheck() {
+        val user = FirebaseAuth.getInstance().currentUser
+        _isLoggedIn.value = when (user) {
+            null -> false
+            else -> true
+        }
     }
 }
