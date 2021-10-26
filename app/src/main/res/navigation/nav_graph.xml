@@ -140,7 +140,11 @@
         android:id="@+id/dominionFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.DominionFragment"
         android:label="dominion_fragment"
-        tools:layout="@layout/dominion_fragment" />
+        tools:layout="@layout/dominion_fragment" >
+        <action
+            android:id="@+id/action_dominionFragment_to_dominionDeckFragment"
+            app:destination="@id/dominionDeckFragment" />
+    </fragment>
     <fragment
         android:id="@+id/firstPlayerFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.FirstPlayerFragment"
@@ -161,4 +165,13 @@
         android:name="de.stenzel.tim.spieleabend.presentation.events.EventCreationFragment"
         android:label="event_creation_fragment"
         tools:layout="@layout/event_creation_fragment" />
+    <fragment
+        android:id="@+id/dominionDeckFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.DominionDeckFragment"
+        android:label="dominion_deck_fragment"
+        tools:layout="@layout/dominion_deck_fragment" >
+        <argument
+            android:name="generatedDeck"
+            app:argType="de.stenzel.tim.spieleabend.models.DominionDeck" />
+    </fragment>
 </navigation>

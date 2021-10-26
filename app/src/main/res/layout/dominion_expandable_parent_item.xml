@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dominion_expansion_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/s_light_grey"
+    >
+
+    <CheckBox
+        android:id="@+id/dominion_expansion_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/dominion_expansion_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/dominion_expansion_cb"
+        app:layout_constraintBottom_toBottomOf="@id/dominion_expansion_cb"
+        app:layout_constraintStart_toEndOf="@id/dominion_expansion_cb"
+        app:layout_constraintEnd_toStartOf="@id/dominion_expansion_indicator"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        tools:text="expansion title"
+        />
+
+    <ImageView
+        android:id="@+id/dominion_expansion_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/dominion_expansion_cb"
+        app:layout_constraintBottom_toBottomOf="@id/dominion_expansion_cb"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
+        android:contentDescription="@string/parent_content_desc" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

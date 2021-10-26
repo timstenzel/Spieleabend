@@ -49,6 +49,10 @@
         <item>Spielekatalog</item>
     </string-array>
 
+    <!-- Dominion Deck Generator Fragment -->
+    <string name="parent_content_desc">Arrow indicating wether item is collapsed or expanded</string>
+    <string name="generate">Generieren</string>
+
     <!-- Catalogue Fragment -->
     <string name="catalogue_player">%d Spieler</string>
     <string name="catalogue_players">%d - %d Spieler</string>
