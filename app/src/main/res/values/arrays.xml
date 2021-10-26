@@ -2,9 +2,9 @@
 <resources>
 
     <integer-array name="assistant_images">
-        <item>@drawable/news_default</item>
-        <item>@drawable/news_default</item>
-        <item>@drawable/news_default</item>
+        <item>@drawable/playing_card</item>
+        <item>@drawable/lucky_wheel</item>
+        <item>@drawable/table_games</item>
     </integer-array>
 
 </resources>

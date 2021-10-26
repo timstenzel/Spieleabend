@@ -9,6 +9,8 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
     android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     card_view:layout_constraintTop_toTopOf="parent"
     card_view:cardCornerRadius="10dp"
     card_view:cardElevation="10dp"
@@ -16,12 +18,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        >
 
         <ImageView
             android:id="@+id/assistant_item_iv"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             tools:src="@drawable/news_default"
@@ -36,6 +39,7 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             android:gravity="center_horizontal"
             style="@style/Headline"
+            android:lines="2"
             tools:text="Assistant Item"
             />
 
