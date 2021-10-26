@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:LuckyWheel="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.assistant.FirstPlayerFragment">
+
+    <com.bluehomestudio.luckywheel.LuckyWheel
+        android:id="@+id/first_player_wheel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        LuckyWheel:background_color="@color/s_light_grey"
+        />
+
+    <Button
+        android:id="@+id/first_player_spin_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/spin_btn"
+        />
+
+</RelativeLayout>

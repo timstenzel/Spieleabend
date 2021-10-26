@@ -140,4 +140,7 @@ dependencies {
     //paging 3
     implementation 'androidx.paging:paging-runtime-ktx:3.0.1'
 
+    //lucky wheel
+    implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
+
 }

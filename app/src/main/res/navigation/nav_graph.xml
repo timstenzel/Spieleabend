@@ -149,7 +149,11 @@
         android:id="@+id/firstPlayerFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.FirstPlayerFragment"
         android:label="first_player_fragment"
-        tools:layout="@layout/first_player_fragment" />
+        tools:layout="@layout/first_player_fragment" >
+        <action
+            android:id="@+id/action_firstPlayerFragment_to_luckyWheelFragment"
+            app:destination="@id/luckyWheelFragment" />
+    </fragment>
     <fragment
         android:id="@+id/catalogueDetailFragment"
         android:name="de.stenzel.tim.spieleabend.presentation.assistant.CatalogueDetailFragment"
@@ -173,5 +177,14 @@
         <argument
             android:name="generatedDeck"
             app:argType="de.stenzel.tim.spieleabend.models.DominionDeck" />
+    </fragment>
+    <fragment
+        android:id="@+id/luckyWheelFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.assistant.LuckyWheelFragment"
+        android:label="LuckyWheelFragment" >
+        <argument
+            android:name="amountOfPlayers"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

@@ -53,6 +53,12 @@
     <string name="parent_content_desc">Arrow indicating wether item is collapsed or expanded</string>
     <string name="generate">Generieren</string>
 
+    <!-- First Player Fragment -->
+    <string name="amount_of_players">Wie viele Spieler spielen mit?</string>
+    <string name="amount_of_players_hint">Anzahl der Spieler (max. 8)</string>
+    <string name="continue_btn">Weiter</string>
+    <string name="spin_btn">Rad drehen</string>
+
     <!-- Catalogue Fragment -->
     <string name="catalogue_player">%d Spieler</string>
     <string name="catalogue_players">%d - %d Spieler</string>
