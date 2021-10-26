@@ -12,7 +12,11 @@
         tools:layout="@layout/news_fragment" >
         <action
             android:id="@+id/action_newsFragment_to_newsDetailFragment"
-            app:destination="@id/newsDetailFragment" />
+            app:destination="@id/newsDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/newsDetailFragment"
@@ -47,10 +51,18 @@
         tools:layout="@layout/event_fragment" >
         <action
             android:id="@+id/action_eventFragment_to_eventCreationFragment"
-            app:destination="@id/eventCreationFragment" />
+            app:destination="@id/eventCreationFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_eventFragment_to_eventDetailFragment"
-            app:destination="@id/eventDetailFragment" />
+            app:destination="@id/eventDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_in" />
     </fragment>
     <fragment
         android:id="@+id/eventDetailFragment"
@@ -102,10 +114,18 @@
         tools:layout="@layout/profile_fragment" >
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/assistantFragment"
@@ -114,13 +134,25 @@
         tools:layout="@layout/assistant_fragment" >
         <action
             android:id="@+id/action_assistantFragment_to_catalogueFragment"
-            app:destination="@id/catalogueFragment" />
+            app:destination="@id/catalogueFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_assistantFragment_to_dominionFragment"
-            app:destination="@id/dominionFragment" />
+            app:destination="@id/dominionFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_assistantFragment_to_firstPlayerFragment"
-            app:destination="@id/firstPlayerFragment" />
+            app:destination="@id/firstPlayerFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -134,7 +166,11 @@
         tools:layout="@layout/catalogue_fragment" >
         <action
             android:id="@+id/action_catalogueFragment_to_catalogueDetailFragment"
-            app:destination="@id/catalogueDetailFragment" />
+            app:destination="@id/catalogueDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/dominionFragment"
@@ -143,7 +179,11 @@
         tools:layout="@layout/dominion_fragment" >
         <action
             android:id="@+id/action_dominionFragment_to_dominionDeckFragment"
-            app:destination="@id/dominionDeckFragment" />
+            app:destination="@id/dominionDeckFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/firstPlayerFragment"
@@ -152,7 +192,11 @@
         tools:layout="@layout/first_player_fragment" >
         <action
             android:id="@+id/action_firstPlayerFragment_to_luckyWheelFragment"
-            app:destination="@id/luckyWheelFragment" />
+            app:destination="@id/luckyWheelFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/catalogueDetailFragment"
