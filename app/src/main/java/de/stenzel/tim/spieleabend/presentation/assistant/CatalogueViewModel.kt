@@ -16,7 +16,7 @@ class CatalogueViewModel @Inject constructor(
     private val repository: DefaultBoardgameRepository
 ) : ViewModel() {
 
-    private var paginatedLiveData : MutableLiveData<PagingData<Game>>? = null
+    var paginatedLiveData : MutableLiveData<PagingData<Game>>? = null
 
     suspend fun fetchBoardgames(): LiveData<PagingData<Game>> {
 

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.databinding.CatalogueFragmentBinding
+import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -63,19 +64,50 @@ class CatalogueFragment : Fragment() {
             }
         }
 
+        binding.errorView.errorRetryBtn.setOnClickListener {
+            fetchBoardgames()
+        }
+
         fetchBoardgames()
     }
 
     // FIXME: 12.10.21 avoid reload of paging data after return from detail fragment
+    // FIXME: 28.10.21 better than before, but still loads current page again
     private fun fetchBoardgames() {
-
-        lifecycleScope.launch {
-            viewModel.fetchBoardgames().observe(viewLifecycleOwner, Observer {
+        if (viewModel.paginatedLiveData == null) {
+            showProgressbar()
+            if (isNetworkAvailable(requireContext())) {
                 lifecycleScope.launch {
-                    catalogueAdapter.submitData(it)
+                    viewModel.fetchBoardgames().observe(viewLifecycleOwner, Observer {
+                        lifecycleScope.launch {
+                            catalogueAdapter.submitData(it)
+                        }
+                    })
                 }
-            })
+            } else {
+                hideProgressbar()
+                showErrorView("No internet connection")
+            }
         }
+    }
+
+    private fun showProgressbar() {
+        binding.progressbar.root.show()
+    }
+
+    private fun hideProgressbar() {
+        binding.progressbar.root.hide()
+    }
+
+    private fun showErrorView(message: String) {
+        binding.catalogueRv.visibility = View.GONE
+        binding.errorView.root.visibility = View.VISIBLE
+        binding.errorView.errorTextview.text = message
+    }
+
+    private fun hideErrorView() {
+        binding.catalogueRv.visibility = View.VISIBLE
+        binding.errorView.root.visibility = View.GONE
     }
 
     override fun onDestroyView() {

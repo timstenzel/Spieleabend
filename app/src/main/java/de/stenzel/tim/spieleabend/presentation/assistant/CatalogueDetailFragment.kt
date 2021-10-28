@@ -41,6 +41,7 @@ class CatalogueDetailFragment : Fragment() {
                 when (response.status) {
                     Status.SUCCESS -> {
                         hideProgressbar()
+                        showContent()
                         response.data?.let { game ->
                             //image
                             if (game.image_url.isEmpty()) {
@@ -119,8 +120,13 @@ class CatalogueDetailFragment : Fragment() {
         }
     }
 
+    private fun showContent() {
+        binding.catalogueDetailScrollview.visibility = View.VISIBLE
+    }
+
     private fun showProgressbar() {
         binding.progressbar.root.show()
+        binding.catalogueDetailScrollview.visibility = View.GONE
     }
 
     private fun hideProgressbar() {
