@@ -17,6 +17,9 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_newsFragment_to_newsFilterFragment"
+            app:destination="@id/newsFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsDetailFragment"
@@ -231,4 +234,9 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/newsFilterFragment"
+        android:name="de.stenzel.tim.spieleabend.presentation.news.NewsFilterFragment"
+        android:label="news_filter_fragment"
+        tools:layout="@layout/news_filter_fragment" />
 </navigation>

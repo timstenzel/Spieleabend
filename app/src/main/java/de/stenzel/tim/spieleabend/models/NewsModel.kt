@@ -10,5 +10,6 @@ data class NewsModel(
     val title : String? = null,
     val content : String? = null,
     val publisher : String? = null,
-    val publishDate : Long? = null
+    val publishDate : Long? = null,
+    val topic : String? = null
 )

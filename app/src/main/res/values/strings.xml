@@ -12,6 +12,20 @@
     <string name="assistant">Assistent</string>
     <string name="profile">Profil</string>
     <string name="settings">Einstellungen</string>
+    <string name="filter">Filter</string>
+
+    <!-- News Filter Fragment -->
+    <string name="sort_by">Sortiere nach:</string>
+    <string name="filter_by_publisher">Filtere nach Veröffentlicher:</string>
+    <string name="filter_by_topic">Filtere nach Thema:</string>
+    <string name="filter_show_all">Alle</string>
+    <string name="apply_btn">Anwenden</string>
+    <string-array name="sort_by">
+        <item>Datum: Neu -> Alt</item>
+        <item>Datum: Alt -> Neu</item>
+        <item>Titel: A -> Z</item>
+        <item>Titel: Z -> A</item>
+    </string-array>
 
     <!-- Event Fragment -->
     <string name="add">Starts a form, where a new event can be created</string>
@@ -107,5 +121,7 @@
 
     <!-- Error Fragment -->
     <string name="error_retry">Erneut versuchen</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,23 +1,19 @@
 package de.stenzel.tim.spieleabend.presentation.news
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ResourceCursorAdapter
-import android.widget.Toast
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.NewsFragmentBinding
-import de.stenzel.tim.spieleabend.helpers.Resource
 import de.stenzel.tim.spieleabend.helpers.Status
 import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
-import de.stenzel.tim.spieleabend.models.NewsModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,7 +22,7 @@ class NewsFragment : Fragment() {
     private var _binding: NewsFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: NewsViewModel by viewModels()
+    private val viewModel: NewsViewModel by activityViewModels()
 
     @Inject
     lateinit var newsAdapter: NewsAdapter
@@ -39,6 +35,8 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         val manager : RecyclerView.LayoutManager = LinearLayoutManager(context)
         binding.newsRv.layoutManager = manager
         binding.newsRv.adapter = newsAdapter
@@ -50,7 +48,7 @@ class NewsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        viewModel.news.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.filteredNews.observe(viewLifecycleOwner, Observer { response ->
             when (response.status) {
                 Status.SUCCESS -> {
                     hideProgressbar()
@@ -74,9 +72,6 @@ class NewsFragment : Fragment() {
         binding.errorView.errorRetryBtn.setOnClickListener {
             startLoading()
         }
-
-        startLoading()
-
     }
 
     private fun startLoading() {
@@ -106,6 +101,23 @@ class NewsFragment : Fragment() {
     private fun hideErrorView() {
         binding.newsRv.visibility = View.VISIBLE
         binding.errorView.root.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu_news_filter, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.news_filter -> {
+                findNavController().navigate(R.id.action_newsFragment_to_newsFilterFragment)
+                true
+            }
+            else -> {
+                Log.e("News Fragment", "error in options menu")
+                true
+            }
+        }
     }
 
     override fun onDestroyView() {

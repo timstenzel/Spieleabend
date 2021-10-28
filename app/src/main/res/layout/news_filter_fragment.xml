@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/screen_margin"
+    tools:context=".presentation.news.NewsFilterFragment">
+
+    <TextView
+        android:id="@+id/news_filter_sort_by_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/sort_by"
+        />
+
+    <Spinner
+        android:id="@+id/news_filter_sort_by_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/news_filter_sort_by_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
+        />
+
+    <TextView
+        android:id="@+id/news_filter_publisher_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/news_filter_sort_by_spinner"
+        android:layout_marginTop="@dimen/vertical_space_between_views_large"
+        android:text="@string/filter_by_publisher"
+        />
+
+    <Spinner
+        android:id="@+id/news_filter_publisher_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/news_filter_publisher_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
+        />
+
+    <TextView
+        android:id="@+id/news_filter_topic_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/news_filter_publisher_spinner"
+        android:layout_marginTop="@dimen/vertical_space_between_views_large"
+        android:text="@string/filter_by_topic"
+        />
+
+    <Spinner
+        android:id="@+id/news_filter_topic_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/news_filter_topic_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
+        />
+
+    <Button
+        android:id="@+id/news_filter_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/apply_btn"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

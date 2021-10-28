@@ -3,9 +3,6 @@ package de.stenzel.tim.spieleabend.presentation.profile
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.CheckBox
-import android.widget.Toast
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -92,7 +89,7 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu, menu)
+        inflater.inflate(R.menu.toolbar_menu_profile, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

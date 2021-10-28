@@ -1,17 +1,12 @@
 package de.stenzel.tim.spieleabend.presentation.news
 
-import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import de.stenzel.tim.spieleabend.helpers.Constants
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
+import de.stenzel.tim.spieleabend.models.Filter
 import de.stenzel.tim.spieleabend.models.NewsModel
 import java.io.IOException
 import javax.inject.Inject
@@ -27,27 +22,42 @@ class NewsViewModel @Inject constructor(
     val news : LiveData<Resource<List<NewsModel>>>
         get() = _news
 
+    private val _filteredNews = MutableLiveData<Resource<List<NewsModel>>>()
+    val filteredNews : LiveData<Resource<List<NewsModel>>>
+        get() = _filteredNews
+
+
+    private val _filters = MutableLiveData<Map<Int, String>>()
+    val filters : LiveData<Map<Int, String>>
+        get() = _filters
+
+    init {
+        getAllNews()
+    }
+
     fun getAllNews() {
         try {
-            _news.postValue(Resource.loading(null))
+            _filteredNews.postValue(Resource.loading(null))
 
             val listener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    _news.postValue(handleNewsResponse(snapshot))
+                    val news = handleNewsResponse(snapshot)
+                    _news.postValue(news)
+                    _filteredNews.postValue(news)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    _news.postValue(Resource.error(error.message, null))
+                    _filteredNews.postValue(Resource.error(error.message, null))
                 }
             }
             db.getReference("news_list").addValueEventListener(listener)
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> {
-                    _news.postValue(Resource.error("Network failure", null))
+                    _filteredNews.postValue(Resource.error("Network failure", null))
                 }
                 else -> {
-                    _news.postValue(Resource.error("Conversion error", null))
+                    _filteredNews.postValue(Resource.error("Conversion error", null))
                 }
             }
         }
@@ -60,9 +70,75 @@ class NewsViewModel @Inject constructor(
             val news = sn.getValue(NewsModel::class.java)
             list.add(news!!)
         }
-        //filter list by date desc (oldest at bottom)
-        list.sortByDescending { it.publishDate }
+        return Resource.success(list.sortedByDescending { it.publishDate })
+    }
 
-        return Resource.success(list)
+    private fun applyFilters(filters: Map<Int, String>) : Resource<List<NewsModel>> {
+        //filter list
+        val allNews = news.value?.data
+        if (allNews != null) {
+            if (filters.isNullOrEmpty()) {
+                //no filters set -> show default (news by all publishers and oldest at bottom)
+                return Resource.success(allNews.sortedByDescending { it.publishDate })
+            } else {
+                //some filters set
+                var filteredList = when {
+                    filters.containsKey(Filter.SORT_BY_A_TO_Z) -> {
+                        allNews.sortedBy { it.title }
+                    }
+                    filters.containsKey(Filter.SORT_BY_Z_TO_A) -> {
+                        allNews.sortedByDescending { it.title }
+                    }
+                    filters.containsKey(Filter.SORT_BY_DATE_ASC) -> {
+                        allNews.sortedBy { it.publishDate }
+                    }
+                    filters.containsKey(Filter.SORT_BY_DATE_DESC) -> {
+                        allNews.sortedByDescending { it.publishDate }
+                    }
+                    else -> {
+                        allNews
+                    }
+                }
+                if (filters.containsKey(Filter.FILTER_PUBLISHER)) {
+                    filteredList = when (filters[Filter.FILTER_PUBLISHER]) {
+                        Filter.FILTER_PUBLISHER_ALL -> {
+                            filteredList
+                        }
+                        else -> {
+                            filteredList.filter { it.publisher == filters[Filter.FILTER_PUBLISHER] }
+                        }
+                    }
+                }
+                if (filters.containsKey(Filter.FILTER_TOPIC)) {
+                    filteredList = when (filters[Filter.FILTER_TOPIC]) {
+                        Filter.FILTER_TOPIC_ALL -> {
+                            filteredList
+                        }
+                        else -> {
+                            filteredList.filter { it.topic == filters[Filter.FILTER_TOPIC] }
+                        }
+                    }
+                }
+
+                //check list size for resource return
+                return if (filteredList.isEmpty()) {
+                    Resource.error("Keine Neuigkeiten übrig, bitte Filter anpassen", null)
+                } else {
+                    Resource.success(filteredList)
+                }
+            }
+        } else {
+            return Resource.error("news list was null", null)
+        }
+    }
+
+    fun addFilters(filter: Map<Int, String>) {
+        val filteredList = applyFilters(filter)
+        _filteredNews.postValue(filteredList)
+        _filters.postValue(filter)
+    }
+
+    fun removeFilter() {
+        _filters.postValue(mapOf())
     }
 }
