@@ -1,13 +1,12 @@
 package de.stenzel.tim.spieleabend.repositories
 
 import androidx.lifecycle.LiveData
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.models.BoardgameResponse
-import de.stenzel.tim.spieleabend.models.CategoriesResponse
-import de.stenzel.tim.spieleabend.models.Game
-import de.stenzel.tim.spieleabend.models.MechanicsResponse
+import de.stenzel.tim.spieleabend.models.remote.BoardgameResponse
+import de.stenzel.tim.spieleabend.models.remote.CategoriesResponse
+import de.stenzel.tim.spieleabend.models.remote.Game
+import de.stenzel.tim.spieleabend.models.remote.MechanicsResponse
 
 interface BoardgameRepository {
 

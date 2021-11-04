@@ -1,35 +1,56 @@
 package de.stenzel.tim.spieleabend.presentation.assistant
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.animation.LinearInterpolator
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
+import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.DominionChildItemBinding
 import de.stenzel.tim.spieleabend.databinding.DominionExpandableParentItemBinding
-import de.stenzel.tim.spieleabend.models.DominionModel
-import de.stenzel.tim.spieleabend.models.ExpandableDominionCardModel
-import de.stenzel.tim.spieleabend.models.ExpandableDominionExpansionModel
-import java.lang.IllegalArgumentException
+import de.stenzel.tim.spieleabend.models.local.DominionCard
+import de.stenzel.tim.spieleabend.models.local.DominionExpansion
+import javax.inject.Inject
 
 const val TYPE_PARENT = 1
 const val TYPE_CHILD = 2
 
-class DominionAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DominionAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val dominionList = ArrayList<Any>() //changes on rows being expanded/collapsed
+    private val dominionList = ArrayList<Any>()
+    private val expansions = ArrayList<DominionExpansion>()
+    private val cards = ArrayList<DominionCard>()
+    private val selectedCardIds = ArrayList<Int>()
+    private val selectedExpansionIds = ArrayList<Int>()
+    private val expandedExpansionIds = ArrayList<Int>()
 
-    fun setData(listExpandable: List<Any>) {
+    fun setData(expandableList: List<Any>) {
         dominionList.clear()
-        dominionList.addAll(listExpandable)
+        dominionList.addAll(expandableList)
+        expansions.clear()
+        cards.clear()
+
+        for (item in dominionList) {
+            if (item is DominionExpansion) {
+                expansions.add(item)
+                selectedExpansionIds.add(item.id)
+            } else if (item is DominionCard){
+                cards.add(item)
+                selectedCardIds.add(item.id)
+            }
+        }
+
         notifyDataSetChanged()
     }
 
     fun getData() : ArrayList<Any> {
         return dominionList
+    }
+
+    fun getSelectedCards() : ArrayList<Int> {
+        return selectedCardIds
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,14 +69,14 @@ class DominionAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DominionParentItemViewHolder) {
-            holder.bind(dominionList[position] as ExpandableDominionExpansionModel, position)
+            holder.bind(dominionList[position] as DominionExpansion, position)
         } else if (holder is DominionChildItemViewHolder) {
-            holder.bind(dominionList[position] as ExpandableDominionCardModel, position)
+            holder.bind(dominionList[position] as DominionCard, position)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (dominionList[position] is ExpandableDominionExpansionModel) {
+        return if (dominionList[position] is DominionExpansion) {
             TYPE_PARENT
         } else {
             TYPE_CHILD
@@ -63,84 +84,80 @@ class DominionAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     }
 
     fun isExpansion(itemPosition: Int) : Boolean {
-        return dominionList[itemPosition] is ExpandableDominionExpansionModel
+        return dominionList[itemPosition] is DominionExpansion
     }
 
     fun isCard(itemPosition: Int) : Boolean {
-        return dominionList[itemPosition] is ExpandableDominionCardModel
+        return dominionList[itemPosition] is DominionCard
     }
 
-    private fun expandExpansion(position: Int) {
-        if (isExpansion(position)) {
-            val row = dominionList[position] as ExpandableDominionExpansionModel
-            row.isExpanded = true
-            val expansion = row.expansion
-            val positionOfFirstCard = position + 1
-            for (i in expansion.cards.indices) {
-                if (isCard(positionOfFirstCard + i)) {
-                    (dominionList[positionOfFirstCard + i] as ExpandableDominionCardModel).isExpanded = true
-                }
-            }
-            notifyItemRangeChanged(position, expansion.cards.size + 1)
-        }
+    fun isExpansionExpanded(id: Int) : Boolean {
+        return expandedExpansionIds.contains(id)
     }
 
-    private fun collapseExpansion(position: Int) {
-        if (isExpansion(position)) {
-            val row = dominionList[position] as ExpandableDominionExpansionModel
-            row.isExpanded = false
-            val expansion = row.expansion
-            val positionOfFirstCard = position + 1
-            for (i in expansion.cards.indices) {
-                if (isCard(positionOfFirstCard + i)) { //extra check which should not be necessary
-                    (dominionList[positionOfFirstCard + i] as ExpandableDominionCardModel).isExpanded = false
-                }
-            }
-            notifyItemRangeChanged(position, expansion.cards.size + 1)
-        }
+    fun isCardChecked(id: Int) : Boolean {
+        return selectedCardIds.contains(id)
     }
 
     inner class DominionParentItemViewHolder(private val binding: DominionExpandableParentItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: ExpandableDominionExpansionModel, position: Int) {
-            binding.dominionExpansionTitle.text = model.expansion.title
-            binding.dominionExpansionCb.isChecked = model.isSelected
+        fun bind(model: DominionExpansion, position: Int) {
+            binding.dominionExpansionTitle.text = model.title
+            binding.dominionExpansionCb.isChecked = selectedExpansionIds.contains(model.id)
 
             binding.dominionExpansionIndicator.setOnClickListener {
-                val row = dominionList[position] as ExpandableDominionExpansionModel
-                if (row.isExpanded) {
-                    collapseExpansion(position)
-                    //binding.dominionExpansionIndicator.animate().rotation(90f)
+                val row = dominionList[position] as DominionExpansion
+                if (isExpansionExpanded(row.id)) {
+                    //currently expanded -> collapse it
+                    expandedExpansionIds.remove(row.id)
+                    binding.dominionExpansionIndicator.setImageResource(R.drawable.ic_baseline_keyboard_arrow_left_24)
                 } else {
-                    expandExpansion(position)
-                    //binding.dominionExpansionIndicator.animate().rotation(-90f)
+                    //currently collapsed -> expand it
+                    expandedExpansionIds.add(row.id)
+                    binding.dominionExpansionIndicator.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
                 }
+                notifyDataSetChanged()
             }
 
             binding.dominionExpansionCb.setOnCheckedChangeListener { compoundButton, isChecked ->
-                Toast.makeText(context, "Checkbox clicked -> checked: $isChecked", Toast.LENGTH_SHORT).show()
-                val row = dominionList[position] as ExpandableDominionExpansionModel
-                row.isSelected = isChecked
+                val row = dominionList[position] as DominionExpansion
 
-                val expansion = row.expansion
-                val positionOfFirstCard = position + 1
-                for (i in expansion.cards.indices) {
-                    if (isCard(positionOfFirstCard + i)) { //extra check which should not be necessary
-                        binding.dominionExpansionCb.isChecked = isChecked
-                        val child = dominionList[positionOfFirstCard + i] as ExpandableDominionCardModel
-                        child.isSelected = isChecked
+                if (isChecked) {
+                    //select expansion
+                    selectedExpansionIds.add(row.id)
+                    //also select all cards of this expansion
+                    for (card in cards) {
+                        if (card.expansionId == row.id) {
+                            if (!selectedCardIds.contains(card.id)) {
+                                selectedCardIds.add(card.id)
+                            }
+                        }
+                    }
+
+                } else {
+                    //unselect expansion
+                    selectedExpansionIds.remove(row.id)
+                    //also unselect all cards of this expansion
+                    for (card in cards) {
+                        if (card.expansionId == row.id) {
+                            if (selectedCardIds.contains(card.id)) {
+                                selectedCardIds.remove(card.id)
+                            }
+                        }
                     }
                 }
-                notifyItemRangeChanged(positionOfFirstCard, expansion.cards.size)
+                if (isExpansionExpanded(row.id)) {
+                    notifyDataSetChanged()
+                }
             }
         }
     }
 
     inner class DominionChildItemViewHolder(private val binding: DominionChildItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: ExpandableDominionCardModel, position: Int) {
+        fun bind(model: DominionCard, position: Int) {
 
             //trick to hide non expanded children
             val container = binding.dominionCardContainer
-            if (model.isExpanded) {
+            if (isExpansionExpanded(model.expansionId)) {
                 //show it
                 container.visibility = View.VISIBLE
                 container.layoutParams = ConstraintLayout.LayoutParams(
@@ -151,13 +168,22 @@ class DominionAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
                 container.layoutParams = ConstraintLayout.LayoutParams(0,0)
             }
 
+            binding.dominionCardCb.setOnCheckedChangeListener { compoundButton, b ->
+                //this is done to remove the current listener
+                //since calling .isChecked triggers the listener
+                //after calling .isChecked the listener is set again
+            }
 
-            binding.dominionCardTitle.text = model.card.title
-            binding.dominionCardCb.isChecked = model.isSelected
+            binding.dominionCardTitle.text = model.title
+            binding.dominionCardCb.isChecked = isCardChecked(model.id)
 
             binding.dominionCardCb.setOnCheckedChangeListener { compoundButton, isChecked ->
-                //update selected state in dominionlist
-                (dominionList[position] as ExpandableDominionCardModel).isSelected = isChecked
+                //update selected state
+                if (isChecked) {
+                    selectedCardIds.add(model.id)
+                } else {
+                    selectedCardIds.remove(model.id)
+                }
             }
         }
     }

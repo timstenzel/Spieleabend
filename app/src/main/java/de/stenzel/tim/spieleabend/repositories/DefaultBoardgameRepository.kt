@@ -7,10 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import de.stenzel.tim.spieleabend.helpers.Constants
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.models.BoardgameResponse
-import de.stenzel.tim.spieleabend.models.CategoriesResponse
-import de.stenzel.tim.spieleabend.models.Game
-import de.stenzel.tim.spieleabend.models.MechanicsResponse
+import de.stenzel.tim.spieleabend.models.remote.BoardgameResponse
+import de.stenzel.tim.spieleabend.models.remote.CategoriesResponse
+import de.stenzel.tim.spieleabend.models.remote.Game
+import de.stenzel.tim.spieleabend.models.remote.MechanicsResponse
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
 import java.lang.Exception
 import javax.inject.Inject

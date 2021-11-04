@@ -3,7 +3,7 @@ package de.stenzel.tim.spieleabend.repositories
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.models.*
+import de.stenzel.tim.spieleabend.models.remote.*
 
 class FakeBoardgameRespositoryImpl : BoardgameRepository{
 

@@ -1,4 +1,4 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.remote
 
 /**
 * data class mirroring a json response from boardgameatlas.com api

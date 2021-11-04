@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.stenzel.tim.spieleabend.helpers.Constants
 import de.stenzel.tim.spieleabend.helpers.Event
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.models.EventModel
+import de.stenzel.tim.spieleabend.models.remote.EventModel
 import java.util.*
 import javax.inject.Inject
 

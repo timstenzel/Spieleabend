@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.qualifiers.ApplicationContext
 import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.CatalogueItemBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
-import de.stenzel.tim.spieleabend.models.Game
+import de.stenzel.tim.spieleabend.models.remote.Game
+import javax.inject.Inject
 
-class CatalogueAdapter(private val context: Context) : PagingDataAdapter<Game, CatalogueAdapter.CatalogueItemViewHolder>(DiffUtilCallback) {
+class CatalogueAdapter @Inject constructor(@ApplicationContext private val context: Context) : PagingDataAdapter<Game, CatalogueAdapter.CatalogueItemViewHolder>(DiffUtilCallback) {
 
     var onItemClick: ((Game) -> Unit)? = null
 

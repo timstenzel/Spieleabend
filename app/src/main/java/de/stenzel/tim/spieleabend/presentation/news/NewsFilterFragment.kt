@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.NewsFilterFragmentBinding
-import de.stenzel.tim.spieleabend.models.Filter
+import de.stenzel.tim.spieleabend.models.local.Filter
 
 @AndroidEntryPoint
 class NewsFilterFragment : Fragment() {

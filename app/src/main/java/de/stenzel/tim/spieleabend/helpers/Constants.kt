@@ -2,6 +2,8 @@ package de.stenzel.tim.spieleabend.helpers
 
 object Constants {
 
+    const val DB_NAME = "spieleabend_dominion_database"
+
     const val URL_FIRE_DB = "https://spieleabendapp-default-rtdb.europe-west1.firebasedatabase.app/"
     const val URL_FIRE_STORAGE = "gs://spieleabendapp.appspot.com/"
     const val URL_FIRE_STORAGE_NEWS = "news/"

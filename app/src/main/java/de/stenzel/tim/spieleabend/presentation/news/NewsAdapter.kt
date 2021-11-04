@@ -8,9 +8,10 @@ import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.NewsItemBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
 import de.stenzel.tim.spieleabend.helpers.formatTimstampToDateString
-import de.stenzel.tim.spieleabend.models.NewsModel
+import de.stenzel.tim.spieleabend.models.remote.NewsModel
+import javax.inject.Inject
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
+class NewsAdapter @Inject constructor() : RecyclerView.Adapter<NewsAdapter.NewsItemViewHolder>() {
 
     var onItemClick: ((NewsModel) -> Unit)? = null
     private val data = ArrayList<NewsModel>()

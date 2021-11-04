@@ -1,7 +1,5 @@
 package de.stenzel.tim.spieleabend.presentation.assistant
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,8 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.stenzel.tim.spieleabend.helpers.Event
 import de.stenzel.tim.spieleabend.helpers.Resource
 import de.stenzel.tim.spieleabend.helpers.Status
-import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
-import de.stenzel.tim.spieleabend.models.*
+import de.stenzel.tim.spieleabend.models.remote.*
 import de.stenzel.tim.spieleabend.repositories.BoardgameRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

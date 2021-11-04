@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import de.stenzel.tim.spieleabend.helpers.Constants
-import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.models.Game
+import de.stenzel.tim.spieleabend.models.remote.Game
 import de.stenzel.tim.spieleabend.network.BoardgameApiService
 import retrofit2.HttpException
 import java.io.IOException

@@ -1,7 +1,8 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.remote
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import de.stenzel.tim.spieleabend.models.remote.*
 
 @Entity
 data class Game(

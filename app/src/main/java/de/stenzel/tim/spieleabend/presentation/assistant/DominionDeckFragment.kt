@@ -29,7 +29,7 @@ class DominionDeckFragment : Fragment() {
 
         val cards = args.generatedDeck.cards
         val event = args.generatedDeck.event
-        val monument = args.generatedDeck.monument
+        val landmark = args.generatedDeck.landmark
 
         binding.dominionDeckCard1.text = cards[0].title
         binding.dominionDeckCard2.text = cards[1].title
@@ -42,7 +42,7 @@ class DominionDeckFragment : Fragment() {
         binding.dominionDeckCard9.text = cards[8].title
         binding.dominionDeckCard10.text = cards[9].title
         binding.dominionDeckEvent.text = event.title
-        binding.dominionDeckMonument.text = monument.title
+        binding.dominionDeckMonument.text = landmark.title
 
 
 

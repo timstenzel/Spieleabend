@@ -1,7 +1,9 @@
 package de.stenzel.tim.spieleabend.network
 
 import de.stenzel.tim.spieleabend.helpers.Constants
-import de.stenzel.tim.spieleabend.models.*
+import de.stenzel.tim.spieleabend.models.remote.BoardgameResponse
+import de.stenzel.tim.spieleabend.models.remote.CategoriesResponse
+import de.stenzel.tim.spieleabend.models.remote.MechanicsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

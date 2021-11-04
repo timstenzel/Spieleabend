@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.stenzel.tim.spieleabend.databinding.AssistantItemBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
-import de.stenzel.tim.spieleabend.models.AssistantModel
+import de.stenzel.tim.spieleabend.models.local.AssistantModel
+import javax.inject.Inject
 
-class AssistantAdapter : RecyclerView.Adapter<AssistantAdapter.AssistantItemViewHolder>(){
+class AssistantAdapter @Inject constructor(): RecyclerView.Adapter<AssistantAdapter.AssistantItemViewHolder>(){
 
     var onItemClick: ((AssistantModel) -> Unit)? = null
     private val data = ArrayList<AssistantModel>()

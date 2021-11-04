@@ -11,8 +11,8 @@ import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.stenzel.tim.spieleabend.helpers.Resource
 import de.stenzel.tim.spieleabend.helpers.timestampToLocalDate
-import de.stenzel.tim.spieleabend.models.EventHeader
-import de.stenzel.tim.spieleabend.models.EventModel
+import de.stenzel.tim.spieleabend.models.remote.EventHeader
+import de.stenzel.tim.spieleabend.models.remote.EventModel
 import java.io.IOException
 import java.time.format.TextStyle
 import java.util.*

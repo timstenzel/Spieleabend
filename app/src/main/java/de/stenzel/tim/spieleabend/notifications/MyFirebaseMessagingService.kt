@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.database.DataSnapshot
@@ -18,7 +17,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.R
-import de.stenzel.tim.spieleabend.models.NewsModel
 import de.stenzel.tim.spieleabend.models.NotificationTokenModel
 import de.stenzel.tim.spieleabend.presentation.MainActivity
 import javax.inject.Inject

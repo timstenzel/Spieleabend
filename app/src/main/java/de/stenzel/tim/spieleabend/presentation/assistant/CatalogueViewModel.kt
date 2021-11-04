@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.stenzel.tim.spieleabend.models.Game
+import de.stenzel.tim.spieleabend.models.remote.Game
 import de.stenzel.tim.spieleabend.repositories.DefaultBoardgameRepository
 import javax.inject.Inject
 

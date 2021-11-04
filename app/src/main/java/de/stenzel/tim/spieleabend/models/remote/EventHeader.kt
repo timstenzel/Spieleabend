@@ -1,4 +1,4 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.remote
 
 class EventHeader(val title: String) {
 

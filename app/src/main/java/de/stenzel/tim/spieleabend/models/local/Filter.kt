@@ -1,4 +1,4 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.local
 
 class Filter() {
     companion object {

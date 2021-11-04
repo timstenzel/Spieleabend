@@ -1,4 +1,4 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.remote
 
 import com.google.firebase.database.IgnoreExtraProperties
 import com.google.gson.annotations.SerializedName

@@ -223,7 +223,7 @@
         tools:layout="@layout/dominion_deck_fragment" >
         <argument
             android:name="generatedDeck"
-            app:argType="de.stenzel.tim.spieleabend.models.DominionDeck" />
+            app:argType="de.stenzel.tim.spieleabend.models.local.DominionDeck" />
     </fragment>
     <fragment
         android:id="@+id/luckyWheelFragment"

@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.database.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.stenzel.tim.spieleabend.helpers.Resource
-import de.stenzel.tim.spieleabend.models.Filter
-import de.stenzel.tim.spieleabend.models.NewsModel
+import de.stenzel.tim.spieleabend.models.local.Filter
+import de.stenzel.tim.spieleabend.models.remote.NewsModel
 import java.io.IOException
 import javax.inject.Inject
 

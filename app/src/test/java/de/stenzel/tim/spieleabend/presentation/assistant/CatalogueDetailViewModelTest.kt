@@ -22,10 +22,12 @@ class CatalogueDetailViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var viewModel: CatalogueDetailViewModel
+    private lateinit var repository: FakeBoardgameRespositoryImpl
 
     @Before
     fun setup() {
-        viewModel = CatalogueDetailViewModel(repository = FakeBoardgameRespositoryImpl())
+        repository = FakeBoardgameRespositoryImpl()
+        viewModel = CatalogueDetailViewModel(repository = repository)
     }
 
     @Test
@@ -36,6 +38,19 @@ class CatalogueDetailViewModelTest {
         val value = viewModel.game.getOrAwaitValueTest()
 
         assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.SUCCESS)
+    }
+
+    @Test
+    fun `download mechanics, categories and game details, return error`() {
+
+        repository.setShouldReturnNetworkError(true)
+
+        viewModel.getBoardgameDetails("")
+
+        val value = viewModel.game.getOrAwaitValueTest()
+
+        assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.ERROR)
+
     }
 
 

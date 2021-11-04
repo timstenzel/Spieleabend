@@ -18,6 +18,7 @@ import de.stenzel.tim.spieleabend.databinding.DominionFragmentBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
 import de.stenzel.tim.spieleabend.helpers.Status
 import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
+import de.stenzel.tim.spieleabend.helpers.showToast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +46,7 @@ class DominionFragment : Fragment() {
         val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         binding.dominionExpandableRv.addItemDecoration(decoration)
 
+        /*
         viewModel.dominionAll.observe(viewLifecycleOwner, Observer { event ->
             val resource = event.getContentIfNotHandled()
             resource?.let { response ->
@@ -69,7 +71,9 @@ class DominionFragment : Fragment() {
             }
         })
 
-        viewModel.preparedDominionExpansionData.observe(viewLifecycleOwner, Observer { data ->
+         */
+
+        viewModel.preparedDominionData.observe(viewLifecycleOwner, Observer { data ->
             dominionAdapter.setData(data)
         })
 
@@ -88,35 +92,18 @@ class DominionFragment : Fragment() {
                     Status.ERROR -> {
                         hideProgressbar()
                         response.message?.let { message ->
-                            showErrorView(message)
+                            showToast(message)
                         }
                     }
                     Status.LOADING -> {
                         showProgressbar()
-                        hideErrorView()
                     }
                 }
             }
         })
 
         binding.dominionConfirmBtn.setOnClickListener {
-            viewModel.generateDeck(dominionAdapter.getData())
-        }
-
-        binding.errorView.errorRetryBtn.setOnClickListener {
-            startLoading()
-        }
-
-        startLoading()
-    }
-
-    private fun startLoading() {
-        showProgressbar()
-        if (isNetworkAvailable(requireContext())) {
-            viewModel.loadData()
-        } else {
-            hideProgressbar()
-            showErrorView("No internet connection")
+            viewModel.generateDeck(dominionAdapter.getSelectedCards())
         }
     }
 
@@ -126,19 +113,6 @@ class DominionFragment : Fragment() {
 
     private fun hideProgressbar() {
         binding.progressbar.root.hide()
-    }
-
-    private fun showErrorView(message: String) {
-        binding.dominionExpandableRv.visibility = View.GONE
-        binding.dominionConfirmBtn.visibility = View.GONE
-        binding.errorView.root.visibility = View.VISIBLE
-        binding.errorView.errorTextview.text = message
-    }
-
-    private fun hideErrorView() {
-        binding.dominionExpandableRv.visibility = View.VISIBLE
-        binding.dominionConfirmBtn.visibility = View.VISIBLE
-        binding.errorView.root.visibility = View.GONE
     }
 
     override fun onDestroyView() {

@@ -12,14 +12,15 @@ import de.stenzel.tim.spieleabend.databinding.EventHeaderItemBinding
 import de.stenzel.tim.spieleabend.databinding.EventItemBinding
 import de.stenzel.tim.spieleabend.glide.GlideApp
 import de.stenzel.tim.spieleabend.helpers.timestampToLocalDateTime
-import de.stenzel.tim.spieleabend.models.EventHeader
-import de.stenzel.tim.spieleabend.models.EventModel
+import de.stenzel.tim.spieleabend.models.remote.EventHeader
+import de.stenzel.tim.spieleabend.models.remote.EventModel
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 const val TYPE_HEADER = 0
 const val TYPE_EVENT = 1
 
-class EventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderItemDecoration.StickyHeaderInterface {
+class EventAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderItemDecoration.StickyHeaderInterface {
 
     var onEventItemClick: ((EventModel) -> Unit)? = null
     private val data = ArrayList<Any>()

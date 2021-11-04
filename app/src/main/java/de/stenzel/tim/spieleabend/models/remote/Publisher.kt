@@ -1,10 +1,10 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.remote
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Designer(
+data class Publisher(
     @PrimaryKey val id: String,
     val num_games: Int,
     val score: Int,

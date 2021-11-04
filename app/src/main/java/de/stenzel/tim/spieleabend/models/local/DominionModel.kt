@@ -1,4 +1,4 @@
-package de.stenzel.tim.spieleabend.models
+package de.stenzel.tim.spieleabend.models.local
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
