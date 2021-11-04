@@ -66,6 +66,10 @@
     <!-- Dominion Deck Generator Fragment -->
     <string name="parent_content_desc">Arrow indicating wether item is collapsed or expanded</string>
     <string name="generate">Generieren</string>
+    <string name="deck_label">Folgende Karten sind enthalten:</string>
+    <string name="card_label">Vorrat:</string>
+    <string name="event_label">Ereignis:</string>
+    <string name="landmark_label">Wahrzeichen:</string>
 
     <!-- First Player Fragment -->
     <string name="amount_of_players">Wie viele Spieler spielen mit?</string>

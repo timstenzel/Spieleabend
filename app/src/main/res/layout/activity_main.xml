@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_bar"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
+        android:layout_margin="@dimen/screen_margin"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

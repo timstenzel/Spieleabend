@@ -42,10 +42,7 @@ class DominionDeckFragment : Fragment() {
         binding.dominionDeckCard9.text = cards[8].title
         binding.dominionDeckCard10.text = cards[9].title
         binding.dominionDeckEvent.text = event.title
-        binding.dominionDeckMonument.text = landmark.title
-
-
-
+        binding.dominionDeckLandmark.text = landmark.title
     }
 
     override fun onDestroyView() {

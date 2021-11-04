@@ -15,8 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="@dimen/vertical_space_between_views"
             >
 
         <ImageView
@@ -68,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_title"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="publisher (2018)"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             />
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_publisher"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             android:drawablePadding="5dp"
             app:drawableStartCompat="@drawable/ic_baseline_person_24"
             android:gravity="center_vertical"
@@ -86,10 +86,9 @@
             android:id="@+id/catalogue_detail_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/catalogue_detail_publisher"
+            app:layout_constraintTop_toTopOf="@id/catalogue_detail_players"
             app:layout_constraintStart_toEndOf="@id/catalogue_detail_players"
             app:layout_constraintEnd_toStartOf="@id/catalogue_detail_time"
-            android:layout_marginTop="5dp"
             android:drawablePadding="5dp"
             app:drawableStartCompat="@drawable/ic_baseline_person_24"
             android:gravity="center_vertical"
@@ -115,8 +114,7 @@
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_players"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:maxLines="2"
@@ -129,8 +127,7 @@
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_category"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:maxLines="2"
@@ -142,6 +139,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_mechanics"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             tools:text="Erlernbarkeit: 2,5/5"
             />
 
@@ -151,6 +149,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_learning_complexity"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             tools:text="Strategie: 2,5/5"
             />
 
@@ -160,6 +159,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_strategy_complexity"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             android:autoLink="web"
             tools:text="Regeln: http://www.urlToRules.com"
             />
@@ -171,7 +171,7 @@
             app:layout_constraintTop_toBottomOf="@id/catalogue_detail_rules"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/vertical_space_between_views"
             style="@style/NewsContent"
             tools:text="Dies ist der Text der das Event beschreibt"
             />

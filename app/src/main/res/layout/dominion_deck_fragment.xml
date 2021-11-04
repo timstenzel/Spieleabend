@@ -7,10 +7,31 @@
     tools:context=".presentation.assistant.DominionDeckFragment">
 
     <TextView
-        android:id="@+id/dominion_deck_card1"
+        android:id="@+id/dominion_deck_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/deck_label"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/dominion_deck_cards_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dominion_deck_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
+        android:text="@string/card_label"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/dominion_deck_card1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dominion_deck_cards_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -19,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card1"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -27,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card2"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -35,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card3"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -43,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card4"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -51,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card5"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -59,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card6"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -67,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card7"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -75,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card8"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
@@ -83,22 +112,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_card9"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
+        />
+
+    <TextView
+        android:id="@+id/dominion_deck_event_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dominion_deck_card10"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
+        android:text="@string/event_label"
+        android:textSize="16sp"
         />
 
     <TextView
         android:id="@+id/dominion_deck_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dominion_deck_card10"
+        app:layout_constraintTop_toBottomOf="@id/dominion_deck_event_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 
     <TextView
-        android:id="@+id/dominion_deck_monument"
+        android:id="@+id/dominion_deck_landmark_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dominion_deck_event"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
+        android:text="@string/landmark_label"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/dominion_deck_landmark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dominion_deck_landmark_label"
+        android:layout_marginTop="@dimen/vertical_space_between_views_small"
         tools:text="test"
         />
 

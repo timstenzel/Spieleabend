@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
     tools:context=".presentation.assistant.FirstPlayerFragment">
 
     <TextView
@@ -23,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@id/first_player_amount_label"
         android:hint="@string/amount_of_players_hint"
         android:inputType="number"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/vertical_space_between_views"
         />
 
     <Button

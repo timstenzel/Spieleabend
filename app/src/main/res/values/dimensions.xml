@@ -3,6 +3,7 @@
 
     <dimen name="screen_margin">8dp</dimen>
     <dimen name="vertical_space_between_views">8dp</dimen>
+    <dimen name="vertical_space_between_views_small">4dp</dimen>
     <dimen name="vertical_space_between_views_large">16dp</dimen>
 
 </resources>

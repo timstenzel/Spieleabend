@@ -15,8 +15,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:paddingBottom="8dp"
             >
 
             <ImageView
@@ -46,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/event_creation_image"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -64,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/event_creation_title_container"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -82,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/event_creation_description_container"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -102,7 +100,7 @@
                 app:layout_constraintTop_toBottomOf="@id/event_creation_location_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/event_creation_start_time_container"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -121,10 +119,9 @@
                 android:id="@+id/event_creation_start_time_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/event_creation_location_container"
+                app:layout_constraintTop_toTopOf="@id/event_creation_start_date_container"
                 app:layout_constraintStart_toEndOf="@id/event_creation_start_date_container"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -146,7 +143,7 @@
                 app:layout_constraintTop_toBottomOf="@id/event_creation_start_date_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/event_creation_start_time_container"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -165,10 +162,9 @@
                 android:id="@+id/event_creation_end_time_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/event_creation_start_date_container"
+                app:layout_constraintTop_toTopOf="@id/event_creation_end_date_container"
                 app:layout_constraintStart_toEndOf="@id/event_creation_start_date_container"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -188,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/event_creation_end_date_container"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
                 >
 
                 <TextView
@@ -199,7 +195,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/public_private_label"
                     android:layout_marginTop="8dp"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     />
 
                 <TextView
@@ -241,6 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/event_creation_switch_container"
+                android:layout_marginTop="@dimen/vertical_space_between_views_small"
                 android:text="@string/event_save_btn"
                 />
 
