@@ -37,8 +37,14 @@ class ProfileFragment : Fragment() {
             isLoggedIn = loggedIn
 
             if (loggedIn) {
+
+                showProfileViews()
+
                 binding.profileLoginLogoutBtn.text = "Logout"
             } else {
+
+                hideProfileViews()
+
                 binding.profileLoginLogoutBtn.text = "Login"
             }
         })
@@ -81,6 +87,20 @@ class ProfileFragment : Fragment() {
 
     private fun logoutUser() {
         viewModel.logoutUser()
+    }
+
+    private fun hideProfileViews() {
+        binding.profileImage.visibility = View.GONE
+        binding.profileDisplayName.visibility = View.GONE
+        binding.profileEmail.visibility = View.GONE
+        binding.profileEmailVerified.visibility = View.GONE
+    }
+
+    private fun showProfileViews() {
+        binding.profileImage.visibility = View.VISIBLE
+        binding.profileDisplayName.visibility = View.VISIBLE
+        binding.profileEmail.visibility = View.VISIBLE
+        binding.profileEmailVerified.visibility = View.VISIBLE
     }
 
     override fun onResume() {
