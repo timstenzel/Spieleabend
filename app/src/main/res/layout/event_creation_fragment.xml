@@ -94,10 +94,46 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_creation_location_lat_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/event_creation_location_container"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/event_creation_location_lat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/location_label_lat"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/event_creation_location_lon_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/event_creation_location_lat_container"
+                android:layout_marginTop="@dimen/vertical_space_between_views"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/event_creation_location_lon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/location_label_lon"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/event_creation_start_date_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/event_creation_location_container"
+                app:layout_constraintTop_toBottomOf="@id/event_creation_location_lon_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/event_creation_start_time_container"
                 android:layout_marginTop="@dimen/vertical_space_between_views"

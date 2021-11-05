@@ -114,6 +114,8 @@ class EventCreationFragment : Fragment(), PermissionManager.PermissionObserver {
                 binding.eventCreationTitle.text.toString(),
                 binding.eventCreationDescription.text.toString(),
                 binding.eventCreationLocation.text.toString(),
+                binding.eventCreationLocationLat.text.toString(),
+                binding.eventCreationLocationLon.text.toString(),
                 now,
                 binding.eventCreationStartDate.text.toString(),
                 binding.eventCreationStartTime.text.toString(),
@@ -142,6 +144,12 @@ class EventCreationFragment : Fragment(), PermissionManager.PermissionObserver {
                 binding.eventCreationDescription.error = getString(R.string.error_required)
             }
             if (errors.contains(EventCreationViewModel.FormErrors.MISSING_LOCATION)) {
+                binding.eventCreationLocation.error = getString(R.string.error_required)
+            }
+            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_LAT)) {
+                binding.eventCreationLocation.error = getString(R.string.error_required)
+            }
+            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_LON)) {
                 binding.eventCreationLocation.error = getString(R.string.error_required)
             }
             if (errors.contains(EventCreationViewModel.FormErrors.MISSING_START_DATE)) {
@@ -216,6 +224,8 @@ class EventCreationFragment : Fragment(), PermissionManager.PermissionObserver {
                 binding.eventCreationTitle.text.toString(),
                 binding.eventCreationDescription.text.toString(),
                 binding.eventCreationLocation.text.toString(),
+                binding.eventCreationLocationLat.text.toString(),
+                binding.eventCreationLocationLon.text.toString(),
                 now,
                 binding.eventCreationStartDate.text.toString(),
                 binding.eventCreationStartTime.text.toString(),

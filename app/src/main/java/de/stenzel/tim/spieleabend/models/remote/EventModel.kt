@@ -1,8 +1,9 @@
 package de.stenzel.tim.spieleabend.models.remote
 
-import com.google.firebase.database.IgnoreExtraProperties
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-@IgnoreExtraProperties
+@Parcelize
 data class EventModel(
     val img : String? = null,
     val title: String? = null,
@@ -13,4 +14,8 @@ data class EventModel(
     val publisherID: String? = null,
     val publisher: String? = null,
     val location: String? = null,
-)
+    val latitude: String? = null,
+    val longitude: String? = null
+) : Parcelable {
+    var distance = ""
+}

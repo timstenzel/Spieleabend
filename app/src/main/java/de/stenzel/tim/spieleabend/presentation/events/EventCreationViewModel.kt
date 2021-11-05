@@ -29,11 +29,10 @@ class EventCreationViewModel @Inject constructor(
     val state : LiveData<Event<Resource<String>>>
         get() = _state
 
-
-
     fun createEvent(imageUri: Uri?, title: String, description: String, location: String,
-                    now: Calendar, startDate: String, startTime: String, start: Calendar,
-                    endDate: String, endTime: String, end: Calendar, public: Boolean) {
+                    latitude: String, longitude: String, now: Calendar, startDate: String,
+                    startTime: String, start: Calendar, endDate: String, endTime: String,
+                    end: Calendar, public: Boolean) {
 
         val imageIdTitle = title.lowercase().replace(" ", "_")
         val imageIdDate = startDate.replace(".", "_")
@@ -55,7 +54,7 @@ class EventCreationViewModel @Inject constructor(
         //prepare end date
         val endSeconds = end.timeInMillis / 1000
 
-        val event = EventModel(completeImageId, title, description, public, startSeconds, endSeconds, userId, displayName, location)
+        val event = EventModel(completeImageId, title, description, public, startSeconds, endSeconds, userId, displayName, location, latitude, longitude)
 
         //upload image to firebase storage
         if (imageUri != null) {
@@ -86,9 +85,9 @@ class EventCreationViewModel @Inject constructor(
             }
     }
 
-    fun isFormValid(title: String, description: String, location: String, now: Calendar,
-                    startDate: String, startTime: String, start: Calendar,
-                    endDate: String, endTime: String, end: Calendar
+    fun isFormValid(title: String, description: String, location: String, latitude: String,
+                    longitude: String, now: Calendar, startDate: String, startTime: String,
+                    start: Calendar, endDate: String, endTime: String, end: Calendar
                     ) : Boolean{
         val errorList = mutableListOf<FormErrors>()
 
@@ -100,6 +99,12 @@ class EventCreationViewModel @Inject constructor(
         }
         if (location.isEmpty()) {
             errorList.add(FormErrors.MISSING_LOCATION)
+        }
+        if (latitude.isEmpty()) {
+            errorList.add(FormErrors.MISSING_LAT)
+        }
+        if (longitude.isEmpty()) {
+            errorList.add(FormErrors.MISSING_LON)
         }
         if (startDate.isEmpty()) {
             errorList.add(FormErrors.MISSING_START_DATE)
@@ -148,6 +153,8 @@ class EventCreationViewModel @Inject constructor(
         MISSING_TITLE,
         MISSING_DESCRIPTION,
         MISSING_LOCATION,
+        MISSING_LAT,
+        MISSING_LON,
         MISSING_START_DATE,
         MISSING_START_TIME,
         MISSING_END_DATE,

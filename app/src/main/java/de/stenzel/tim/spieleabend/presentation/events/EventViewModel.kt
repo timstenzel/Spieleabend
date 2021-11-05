@@ -1,16 +1,24 @@
 package de.stenzel.tim.spieleabend.presentation.events
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import de.stenzel.tim.spieleabend.helpers.Resource
+import de.stenzel.tim.spieleabend.helpers.showToast
 import de.stenzel.tim.spieleabend.helpers.timestampToLocalDate
+import de.stenzel.tim.spieleabend.models.local.LocationModel
 import de.stenzel.tim.spieleabend.models.remote.EventHeader
 import de.stenzel.tim.spieleabend.models.remote.EventModel
 import java.io.IOException
@@ -20,6 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val db : FirebaseDatabase
 ) : ViewModel() {
 
@@ -30,6 +39,10 @@ class EventViewModel @Inject constructor(
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn : LiveData<Boolean>
         get() = _isLoggedIn
+
+    private val _location = MutableLiveData<Resource<LocationModel>>()
+    val location : LiveData<Resource<LocationModel>>
+        get() = _location
 
 
     fun getAllEvents() {
@@ -89,6 +102,24 @@ class EventViewModel @Inject constructor(
         }
 
         return finalList
+    }
+
+    fun getCurrentLocation() {
+        try {
+            val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+            fusedLocationProviderClient.getCurrentLocation(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, CancellationTokenSource().token)
+                .addOnSuccessListener { location ->
+                    val currLocationLat = location.latitude
+                    val currLocationLon = location.longitude
+                    _location.postValue(Resource.success(LocationModel(currLocationLat, currLocationLon)))
+                }
+                .addOnFailureListener {
+                    _location.postValue(Resource.error("Standort nicht gefunden", null))
+                }
+        } catch (e : SecurityException) {
+            _location.postValue(Resource.error("Keine Berechtigung für Standortabfragen", null))
+        }
+
     }
 
     fun statusCheck() {

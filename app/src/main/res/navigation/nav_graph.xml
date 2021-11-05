@@ -73,37 +73,8 @@
         android:label="event_detail_fragment"
         tools:layout="@layout/event_detail_fragment" >
         <argument
-            android:name="img"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="title"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="description"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="startDate"
-            app:argType="long"
-            android:defaultValue="-1L" />
-        <argument
-            android:name="endDate"
-            app:argType="long"
-            android:defaultValue="-1L" />
-        <argument
-            android:name="publisher"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="location"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="distance"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="eventModel"
+            app:argType="de.stenzel.tim.spieleabend.models.remote.EventModel" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

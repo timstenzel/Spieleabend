@@ -34,24 +34,30 @@ class EventDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val startDate = timestampToLocalDateTime(args.startDate)
-        val endDate = timestampToLocalDateTime(args.endDate)
+        val event = args.eventModel
+
         val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-        if (args.img.isNullOrEmpty()) {
+        if (event.img.isNullOrEmpty()) {
             GlideApp.with(requireContext()).load(R.drawable.event_default).into(binding.eventDetailImage)
         } else {
-            val ref = FirebaseStorage.getInstance().getReferenceFromUrl(args.img!!)
+            val ref = FirebaseStorage.getInstance().getReferenceFromUrl(event.img)
             GlideApp.with(requireContext()).load(ref).error(R.drawable.error_default).into(binding.eventDetailImage)
         }
-        binding.eventDetailPublisher.text = getString(R.string.event_publisher, args.publisher)
-        binding.eventDetailTitle.text = args.title
-        binding.eventDetailDate.text = startDate.format(dateFormatter)
-        binding.eventDetailTime.text = getString(R.string.event_time, startDate.format(timeFormatter), endDate.format(timeFormatter))
-        binding.eventDetailLocation.text = args.location
-        binding.eventDetailDistance.text = args.distance
-        binding.eventDetailContent.text = args.description
+        binding.eventDetailPublisher.text = getString(R.string.event_publisher, event.publisher)
+        binding.eventDetailTitle.text = event.title
+
+        if (event.startDate != null && event.endDate != null) {
+            val startDate = timestampToLocalDateTime(event.startDate)
+            val endDate = timestampToLocalDateTime(event.endDate)
+            binding.eventDetailDate.text = startDate.format(dateFormatter)
+            binding.eventDetailTime.text = getString(R.string.event_time, startDate.format(timeFormatter), endDate.format(timeFormatter))
+        }
+
+        binding.eventDetailLocation.text = event.location
+        binding.eventDetailDistance.text = event.distance
+        binding.eventDetailContent.text = event.description
     }
 
     override fun onDestroyView() {
