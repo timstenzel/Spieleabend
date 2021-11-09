@@ -23,10 +23,7 @@ import com.eazypermissions.livedatapermission.PermissionManager
 import dagger.hilt.android.AndroidEntryPoint
 import de.stenzel.tim.spieleabend.R
 import de.stenzel.tim.spieleabend.databinding.EventCreationFragmentBinding
-import de.stenzel.tim.spieleabend.helpers.Status
-import de.stenzel.tim.spieleabend.helpers.clearError
-import de.stenzel.tim.spieleabend.helpers.isNetworkAvailable
-import de.stenzel.tim.spieleabend.helpers.showToast
+import de.stenzel.tim.spieleabend.helpers.*
 import java.util.*
 
 @AndroidEntryPoint
@@ -110,7 +107,7 @@ class EventCreationFragment : Fragment(), PermissionManager.PermissionObserver {
 
         //save event (first check if all user input is valid)
         binding.eventCreationSaveBtn.setOnClickListener {
-            val valid = viewModel.isFormValid(
+            val errors = EventCreationUtil.isFormValid(
                 binding.eventCreationTitle.text.toString(),
                 binding.eventCreationDescription.text.toString(),
                 binding.eventCreationLocation.text.toString(),
@@ -125,60 +122,55 @@ class EventCreationFragment : Fragment(), PermissionManager.PermissionObserver {
                 end
             )
 
-            if (valid) {
-                passDataToSaveEvent()
-            }
-        }
-
-        viewModel.formErrors.observe(viewLifecycleOwner, { errors ->
             if (errors.isEmpty()) {
                 binding.eventCreationStartDate.clearError()
                 binding.eventCreationStartTime.clearError()
                 binding.eventCreationEndDate.clearError()
                 binding.eventCreationEndTime.clearError()
+                passDataToSaveEvent()
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_TITLE)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_TITLE)) {
                 binding.eventCreationTitle.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_DESCRIPTION)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_DESCRIPTION)) {
                 binding.eventCreationDescription.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_LOCATION)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_LOCATION)) {
                 binding.eventCreationLocation.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_LAT)) {
-                binding.eventCreationLocation.error = getString(R.string.error_required)
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_LAT)) {
+                binding.eventCreationLocationLat.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_LON)) {
-                binding.eventCreationLocation.error = getString(R.string.error_required)
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_LON)) {
+                binding.eventCreationLocationLon.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_START_DATE)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_START_DATE)) {
                 binding.eventCreationStartDate.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_START_TIME)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_START_TIME)) {
                 binding.eventCreationStartTime.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_END_DATE)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_END_DATE)) {
                 binding.eventCreationEndDate.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.MISSING_END_TIME)) {
+            if (errors.contains(EventCreationUtil.FormErrors.MISSING_END_TIME)) {
                 binding.eventCreationEndTime.error = getString(R.string.error_required)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.START_IN_PAST)) {
+            if (errors.contains(EventCreationUtil.FormErrors.START_IN_PAST)) {
                 binding.eventCreationStartDate.error = getString(R.string.error_start_in_past)
                 binding.eventCreationStartTime.error = getString(R.string.error_start_in_past)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.END_IN_PAST)) {
+            if (errors.contains(EventCreationUtil.FormErrors.END_IN_PAST)) {
                 binding.eventCreationEndDate.error = getString(R.string.error_end_in_past)
                 binding.eventCreationEndTime.error = getString(R.string.error_end_in_past)
             }
-            if (errors.contains(EventCreationViewModel.FormErrors.END_BEFORE_START)) {
+            if (errors.contains(EventCreationUtil.FormErrors.END_BEFORE_START)) {
                 binding.eventCreationStartDate.error = getString(R.string.error_end_before_start)
                 binding.eventCreationStartTime.error = getString(R.string.error_end_before_start)
                 binding.eventCreationEndDate.error = getString(R.string.error_end_before_start)
                 binding.eventCreationEndTime.error = getString(R.string.error_end_before_start)
             }
-        })
+        }
 
         viewModel.state.observe(viewLifecycleOwner, androidx.lifecycle.Observer { event ->
             val resource = event.getContentIfNotHandled()

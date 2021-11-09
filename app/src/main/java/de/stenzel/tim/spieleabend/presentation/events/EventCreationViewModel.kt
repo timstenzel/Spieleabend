@@ -21,9 +21,12 @@ class EventCreationViewModel @Inject constructor(
     private val db: FirebaseDatabase
 ) : ViewModel() {
 
+    /*
     private val _formErrors = MutableLiveData<List<FormErrors>>()
     val formErrors : LiveData<List<FormErrors>>
         get() = _formErrors
+
+     */
 
     private val _state = MutableLiveData<Event<Resource<String>>>()
     val state : LiveData<Event<Resource<String>>>
@@ -85,6 +88,7 @@ class EventCreationViewModel @Inject constructor(
             }
     }
 
+    /*
     fun isFormValid(title: String, description: String, location: String, latitude: String,
                     longitude: String, now: Calendar, startDate: String, startTime: String,
                     start: Calendar, endDate: String, endTime: String, end: Calendar
@@ -132,6 +136,8 @@ class EventCreationViewModel @Inject constructor(
         return errorList.isEmpty()
     }
 
+     */
+
     private fun statusCheck(): Pair<String, String> {
         val user = FirebaseAuth.getInstance().currentUser
         val isLoggedIn = when (user) {
@@ -148,20 +154,4 @@ class EventCreationViewModel @Inject constructor(
             Pair("", "")
         }
     }
-
-    enum class FormErrors {
-        MISSING_TITLE,
-        MISSING_DESCRIPTION,
-        MISSING_LOCATION,
-        MISSING_LAT,
-        MISSING_LON,
-        MISSING_START_DATE,
-        MISSING_START_TIME,
-        MISSING_END_DATE,
-        MISSING_END_TIME,
-        START_IN_PAST,
-        END_IN_PAST,
-        END_BEFORE_START
-    }
-
 }
