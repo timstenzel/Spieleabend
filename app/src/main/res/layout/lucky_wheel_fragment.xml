@@ -7,7 +7,7 @@
     tools:context=".presentation.assistant.FirstPlayerFragment">
 
     <com.bluehomestudio.luckywheel.LuckyWheel
-        android:id="@+id/first_player_wheel"
+        android:id="@+id/lucky_wheel_wheel_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -15,7 +15,7 @@
         />
 
     <Button
-        android:id="@+id/first_player_spin_btn"
+        android:id="@+id/lucky_wheel_spin_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

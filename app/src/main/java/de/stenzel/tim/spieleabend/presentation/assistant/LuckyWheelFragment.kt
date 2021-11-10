@@ -48,15 +48,15 @@ class LuckyWheelFragment : Fragment() {
                     }
                 }
             }
-            binding.firstPlayerWheel.addWheelItems(wheelItems)
+            binding.luckyWheelWheelView.addWheelItems(wheelItems)
         }
 
         viewModel.luckyWinner.observe(viewLifecycleOwner, Observer { winner ->
-            binding.firstPlayerWheel.setTarget(winner)
-            binding.firstPlayerWheel.rotateWheelTo(winner)
+            binding.luckyWheelWheelView.setTarget(winner)
+            binding.luckyWheelWheelView.rotateWheelTo(winner)
         })
 
-        binding.firstPlayerSpinBtn.setOnClickListener {
+        binding.luckyWheelSpinBtn.setOnClickListener {
             viewModel.startSpinning(args.amountOfPlayers)
         }
     }
