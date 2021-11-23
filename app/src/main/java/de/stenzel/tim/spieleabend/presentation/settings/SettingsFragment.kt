@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.findNavController
 import androidx.preference.*
 import com.google.firebase.messaging.FirebaseMessaging
@@ -96,9 +97,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         //add click support for theme switch
         switchTheme.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
             if (newValue as Boolean) {
-                //TODO switch theme to dark
+                //switch theme to dark
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                requireActivity().recreate()
             } else {
-                //TODO switch theme to light
+                //switch theme to light
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                requireActivity().recreate()
             }
             true
         }
