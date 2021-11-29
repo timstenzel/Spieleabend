@@ -6,6 +6,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
     id 'androidx.navigation.safeargs.kotlin'
+    // Apply the Crashlytics Gradle plugin
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -131,6 +133,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-installations:17.0.0'
     //firebase cloud messaging (notifications)
     implementation 'com.google.firebase:firebase-messaging'
+    //firebase crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 
     //cardview
     implementation("androidx.cardview:cardview:1.0.0")
