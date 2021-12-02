@@ -1,7 +1,8 @@
 package de.stenzel.tim.spieleabend.models.remote
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class EventModel(
@@ -17,5 +18,6 @@ data class EventModel(
     val latitude: String? = null,
     val longitude: String? = null
 ) : Parcelable {
+    @IgnoredOnParcel
     var distance = ""
 }

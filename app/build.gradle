@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
     id 'androidx.navigation.safeargs.kotlin'
@@ -45,16 +45,8 @@ android {
             force 'androidx.test:monitor:1.4.0'
         }
     }
-    // see https://github.com/google/dagger/issues/1449#issuecomment-495404186
-    if (project.hasProperty('kapt')) {
-        // Reference for 'kapt' DSL: https://kotlinlang.org/docs/reference/kapt.html#java-compiler-options
-        kapt {
-            // we expect this closure to run over a org.jetbrains.kotlin.gradle.plugin.KaptExtension
-            javacOptions {
-                option("-source", "8")
-                option("-target", "8")
-            }
-        }
+    tasks.withType(JavaCompile) {
+        options.compilerArgs += [ "--release", "8" ]
     }
 }
 
@@ -173,8 +165,4 @@ dependencies {
 
     //lucky wheel
     implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
-
-    // https://github.com/google/dagger/issues/1339
-    compileOnly 'com.github.pengrad:jdk9-deps:1.0'
-
 }
