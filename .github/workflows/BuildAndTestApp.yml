@@ -3,7 +3,7 @@ name: Android run tests then build debug apk
 on:
   push:
     branches:
-      - 'githubActionsTest'
+      - 'master'
 
 jobs:
   test:
