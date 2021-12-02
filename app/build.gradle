@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
     id 'androidx.navigation.safeargs.kotlin'
@@ -113,9 +113,7 @@ dependencies {
     //hilt (dependency injection)
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-    def hilt_viewmodel_version = "1.0.0-alpha03"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodel_version"
-    kapt "androidx.hilt:hilt-compiler:$hilt_viewmodel_version"
+    def hilt_viewmodel_version = "1.0.0-beta01"
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
@@ -162,5 +160,4 @@ dependencies {
 
     //lucky wheel
     implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
-
 }
