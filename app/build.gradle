@@ -174,4 +174,7 @@ dependencies {
     //lucky wheel
     implementation 'com.github.mmoamenn:LuckyWheel_Android:0.3.0'
 
+    // https://github.com/google/dagger/issues/1339
+    compileOnly 'com.github.pengrad:jdk9-deps:1.0'
+
 }
